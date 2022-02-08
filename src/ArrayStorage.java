@@ -13,9 +13,9 @@ public class ArrayStorage {
     }
 
     void save(Resume r) {
-        for (int n = 0; n < storage.length; n++) {
-            if (storage[n] == null) {
-                storage[n] = r;
+        for (int i = 0; i < storage.length; i++) {
+            if (storage[i] == null) {
+                storage[i] = r;
                 size++;
                 break;
             }
@@ -34,15 +34,15 @@ public class ArrayStorage {
     }
 
     void delete(String uuid) {
-        for (int n = 0; n < storage.length; n++) {
-            if (storage[n] == null) {
+        for (int i = 0; i < storage.length; i++) {
+            if (storage[i] == null) {
                 break;
-            } else if (uuid.equals(storage[n].uuid)) {
-                if (storage[n + 1] == null) {
-                    storage[n] = null;
+            } else if (uuid.equals(storage[i].uuid)) {
+                if (storage[i + 1] == null) {
+                    storage[i] = null;
                 } else {
-                    for (int m = n; storage[m] != null; m++) {
-                        storage[m] = storage[m + 1];
+                    for (int j = i; storage[j] != null; j++) {
+                        storage[j] = storage[j + 1];
                     }
                 }
                 size--;
