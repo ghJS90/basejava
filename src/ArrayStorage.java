@@ -24,7 +24,7 @@ public class ArrayStorage {
 
     Resume get(String uuid) {
         for (Resume r : storage) {
-            if (r == null){
+            if (r == null) {
                 break;
             } else if (uuid.equals(r.uuid)) {
                 return r;
@@ -41,11 +41,11 @@ public class ArrayStorage {
                 if (storage[n + 1] == null) {
                     storage[n] = null;
                 } else {
-                    for (int m = n; storage[m + 1] != null; m++) {
-                        storage[m] = storage [m + 1];
+                    for (int m = n; storage[m] != null; m++) {
+                        storage[m] = storage[m + 1];
                     }
                 }
-                size --;
+                size--;
             }
         }
     }
