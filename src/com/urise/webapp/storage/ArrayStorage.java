@@ -36,15 +36,14 @@ public class ArrayStorage {
     public void save(Resume r) {
         if (size == 10000) {
             System.out.println("\nПостройте больше хранилищ!");
+        } else if (findResumeUuid(r.getUuid()) >= 0) {
+            System.out.println("\nРезюме " + r.getUuid() + " уже присутствует в хранилище.");
         } else {
-            if (findResumeUuid(r.getUuid()) >= 0) {
-                System.out.println("\nРезюме " + r.getUuid() + " уже присутствует в хранилище.");
-            } else {
-                storage[size] = r;
-                size++;
-            }
+            storage[size] = r;
+            size++;
         }
     }
+
 
     public Resume get(String uuid) {
         if (findResumeUuid(uuid) >= 0) {
