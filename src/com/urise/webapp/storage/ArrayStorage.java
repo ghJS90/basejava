@@ -11,20 +11,11 @@ public class ArrayStorage {
     private final Resume[] storage = new Resume[10000];
     private int size = 0;
 
-    private int findResumeUuid(String uuid) {  // Метод для определения индекса резюме в массиве. Убираем дублируемый код.
-        for (int i = 0; i < size; i++) {
-            if (uuid.equals(storage[i].getUuid())) {
-                return i;
-            }
-        }
-        return -1;
-    }
-
     public void update(Resume r) {
-        if (findResumeUuid(r.getUuid()) < 0) {
-            System.out.println("\nРезюме " + r + " отсутствует в хранилище.");
+        if (findIndex(r.getUuid()) < 0) {
+            System.out.println("\nРезюме " + r + " отсутствует в массиве.");
         } else {
-            storage[findResumeUuid(r.getUuid())] = r;
+            storage[findIndex(r.getUuid())] = r;
         }
     }
 
@@ -34,31 +25,32 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (size == 10000) {
-            System.out.println("\nПостройте больше хранилищ!");
-        } else if (findResumeUuid(r.getUuid()) >= 0) {
-            System.out.println("\nРезюме " + r.getUuid() + " уже присутствует в хранилище.");
+        if (size == storage.length) {
+            System.out.println("\nМассив заполнен. Резюме не сохранилось");
+        } else if (findIndex(r.getUuid()) >= 0) {
+            System.out.println("\nРезюме " + r.getUuid() + " уже присутствует в массиве.");
         } else {
             storage[size] = r;
             size++;
         }
     }
 
-
     public Resume get(String uuid) {
-        if (findResumeUuid(uuid) >= 0) {
-            return storage[findResumeUuid(uuid)];
+        int index = findIndex(uuid);
+        if (index >= 0) {
+            return storage[index];
         }
-        System.out.println("\nРезюме " + uuid + " отсутствует в хранилище.");
+        System.out.println("\nРезюме " + uuid + " отсутствует в массиве.");
         return null;
     }
 
     public void delete(String uuid) {
-        if (findResumeUuid(uuid) >= 0) {
-            System.arraycopy(storage, findResumeUuid(uuid) + 1, storage, findResumeUuid(uuid), size - findResumeUuid(uuid) - 1);
+        int index = findIndex(uuid);
+        if (index >= 0) {
+            System.arraycopy(storage, index + 1, storage, index, size - index - 1);
             size--;
         } else {
-            System.out.println("\nРезюме " + uuid + " отсутствует в хранилище.");
+            System.out.println("\nРезюме " + uuid + " отсутствует в массиве.");
         }
     }
 
@@ -66,11 +58,20 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-        return Arrays.copyOfRange(storage, 0, size);
+        return Arrays.copyOf(storage, size);
     }
 
     public int size() {
         return size;
     }
 
+    // Метод для определения индекса резюме в массиве. Убираем дублируемый код.
+    private int findIndex(String uuid) {
+        for (int i = 0; i < size; i++) {
+            if (uuid.equals(storage[i].getUuid())) {
+                return i;
+            }
+        }
+        return -1;
+    }
 }
