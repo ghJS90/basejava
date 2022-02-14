@@ -12,10 +12,11 @@ public class ArrayStorage {
     private int size = 0;
 
     public void update(Resume r) {
-        if (findIndex(r.getUuid()) < 0) {
+        int index = findIndex(r.getUuid());
+        if (index < 0) {
             System.out.println("\nРезюме " + r + " отсутствует в массиве.");
         } else {
-            storage[findIndex(r.getUuid())] = r;
+            storage[index] = r;
         }
     }
 
