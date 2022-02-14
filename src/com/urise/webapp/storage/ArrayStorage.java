@@ -21,7 +21,7 @@ public class ArrayStorage {
     }
 
     public void clear() {
-        Arrays.fill(storage, storage[size - 1]);
+        Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
