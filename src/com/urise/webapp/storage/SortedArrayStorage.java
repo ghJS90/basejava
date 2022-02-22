@@ -10,27 +10,14 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     public void save(Resume r) {
         if (size == storage.length) {
             System.out.println("\nМассив заполнен. Резюме не сохранилось");
-        } else if (size == 0) {
-            storage[0] = r;
+        }
+        int index = -(Arrays.binarySearch(storage, 0, size, r)) - 1;
+        if (index < 0) {
+            System.out.println("\nРезюме " + r.getUuid() + " уже присутствует в массиве.");
+        } else {
+            System.arraycopy(storage, index, storage, index + 1, size - index);
+            storage[index] = r;
             size++;
-        } else if (size > 0) {
-            for (int i = 0; i < size; i++) {
-                if (r.getUuid().compareTo(storage[i].getUuid()) > 0) {
-                    if (storage[i + 1] == null) {
-                        storage[i + 1] = r;
-                        size++;
-                        break;
-                    }
-                } else if (r.getUuid().compareTo(storage[i].getUuid()) < 0) {
-                    System.arraycopy(storage, i, storage, i + 1, size - i);
-                    storage[i] = r;
-                    size++;
-                    break;
-                } else if (r.getUuid().compareTo(storage[i].getUuid()) == 0) {
-                    System.out.println("\nРезюме " + r.getUuid() + " уже присутствует в массиве.");
-                    break;
-                }
-            }
         }
     }
 
