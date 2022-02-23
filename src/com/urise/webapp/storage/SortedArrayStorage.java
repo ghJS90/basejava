@@ -9,7 +9,8 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     @Override
     public void save(Resume r) {
         if (size == storage.length) {
-            System.out.println("\nМассив заполнен. Резюме не сохранилось");
+            textIsFull();
+            return;
         }
         int index = -(findIndex(r.getUuid())) - 1;
         if (index < 0) {

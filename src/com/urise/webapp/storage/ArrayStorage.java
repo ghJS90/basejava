@@ -9,7 +9,7 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     public void save(Resume r) {
         if (size == storage.length) {
-            System.out.println("\nМассив заполнен. Резюме не сохранилось");
+            textIsFull();
         } else if (findIndex(r.getUuid()) >= 0) {
             System.out.println("\nРезюме " + r.getUuid() + " уже присутствует в массиве.");
         } else {
