@@ -11,7 +11,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         if (size == storage.length) {
             System.out.println("\nМассив заполнен. Резюме не сохранилось");
         }
-        int index = -(Arrays.binarySearch(storage, 0, size, r)) - 1;
+        int index = -(findIndex(r.getUuid())) - 1;
         if (index < 0) {
             System.out.println("\nРезюме " + r.getUuid() + " уже присутствует в массиве.");
         } else {
