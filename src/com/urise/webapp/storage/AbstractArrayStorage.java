@@ -45,7 +45,6 @@ public abstract class AbstractArrayStorage implements Storage {
         return Arrays.copyOf(storage, size);
     }
 
-
     public Resume get(String uuid) {
         int index = findIndex(uuid);
         if (index >= 0) {
@@ -55,11 +54,17 @@ public abstract class AbstractArrayStorage implements Storage {
         return null;
     }
 
-    protected abstract int findIndex(String uuid);
-
-    protected void textIsFull(){
+    public void save(Resume r) {
         if (size == storage.length) {
-            System.out.println("\nМассив заполнен. Резюме не сохранилось");
+            System.out.println("\nМассив заполнен. Резюме " + r + " не сохранилось");
+        } else {
+            addResumeToStorage(r);
         }
     }
+
+   // public abstract boolean checkForExist(Resume r);
+
+    public abstract void addResumeToStorage(Resume r);
+
+    protected abstract int findIndex(String uuid);
 }
