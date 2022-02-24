@@ -13,7 +13,6 @@ public class SortedArrayStorage extends AbstractArrayStorage {
         storage[index] = r;
     }
 
-
     @Override
     protected int findIndex(String uuid) {
         Resume searchKey = new Resume();
