@@ -59,12 +59,16 @@ public abstract class AbstractArrayStorage implements Storage {
             System.out.println("\nМассив заполнен. Резюме " + r + " не сохранилось");
         } else {
             int index = findIndex(r.getUuid());
-            addResumeToStorage(r, index);
-            size++;
+            if (index >= 0) {
+                System.out.println("\nРезюме " + r.getUuid() + " уже присутствует в массиве.");
+            } else {
+                addResumeToArray(r, index);
+                size++;
+            }
         }
     }
 
-    public abstract void addResumeToStorage(Resume r, int i);
+    public abstract void addResumeToArray(Resume r, int i);
 
     protected abstract int findIndex(String uuid);
 }
