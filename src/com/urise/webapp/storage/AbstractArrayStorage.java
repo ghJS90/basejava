@@ -62,8 +62,6 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-   // public abstract boolean checkForExist(Resume r);
-
     public abstract void addResumeToStorage(Resume r);
 
     protected abstract int findIndex(String uuid);
