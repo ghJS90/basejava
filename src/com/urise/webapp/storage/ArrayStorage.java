@@ -8,12 +8,11 @@ import com.urise.webapp.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void addResumeToStorage(Resume r) {
-        if (findIndex(r.getUuid()) >= 0) {
+    public void addResumeToStorage(Resume r, int i) {
+        if (i >= 0) {
             System.out.println("\nРезюме " + r.getUuid() + " уже присутствует в массиве.");
         } else {
             storage[size] = r;
-            size++;
         }
     }
 
