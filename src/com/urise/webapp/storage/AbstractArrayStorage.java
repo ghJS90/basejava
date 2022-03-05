@@ -1,14 +1,16 @@
 package com.urise.webapp.storage;
 
+import com.urise.webapp.excepcion.ExistStorageException;
+import com.urise.webapp.excepcion.NotExistStorageExeption;
+import com.urise.webapp.excepcion.StorageException;
 import com.urise.webapp.model.Resume;
-
 import java.util.Arrays;
 
 /**
  * Array based storage for Resumes
  */
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 5;
+    protected static final int STORAGE_LIMIT = 4;
 
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
@@ -16,7 +18,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void update(Resume r) {
         int index = findIndex(r.getUuid());
         if (index < 0) {
-            System.out.println("\nРезюме " + r + " отсутствует в массиве.");
+            throw new NotExistStorageExeption(r.getUuid());
         } else {
             storage[index] = r;
         }
@@ -50,17 +52,16 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             return storage[index];
         }
-        System.out.println("\nРезюме " + uuid + " отсутствует в массиве.");
-        return null;
+        throw new NotExistStorageExeption(uuid);
     }
 
     public void save(Resume r) {
         if (size == storage.length) {
-            System.out.println("\nМассив заполнен. Резюме " + r + " не сохранилось");
+            throw new StorageException("Массив заполнен", r.getUuid());
         } else {
             int index = findIndex(r.getUuid());
             if (index >= 0) {
-                System.out.println("\nРезюме " + r.getUuid() + " уже присутствует в массиве.");
+                throw new ExistStorageException(r.getUuid());
             } else {
                 addResumeToArray(r, index);
                 size++;
