@@ -4,13 +4,14 @@ import com.urise.webapp.excepcion.ExistStorageException;
 import com.urise.webapp.excepcion.NotExistStorageExeption;
 import com.urise.webapp.excepcion.StorageException;
 import com.urise.webapp.model.Resume;
+
 import java.util.Arrays;
 
 /**
  * Array based storage for Resumes
  */
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 4;
+    protected static final int STORAGE_LIMIT = 10000;
 
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
@@ -19,9 +20,8 @@ public abstract class AbstractArrayStorage implements Storage {
         int index = findIndex(r.getUuid());
         if (index < 0) {
             throw new NotExistStorageExeption(r.getUuid());
-        } else {
-            storage[index] = r;
         }
+        storage[index] = r;
     }
 
     public void clear() {
@@ -58,15 +58,14 @@ public abstract class AbstractArrayStorage implements Storage {
     public void save(Resume r) {
         if (size == storage.length) {
             throw new StorageException("Массив заполнен", r.getUuid());
-        } else {
-            int index = findIndex(r.getUuid());
-            if (index >= 0) {
-                throw new ExistStorageException(r.getUuid());
-            } else {
-                addResumeToArray(r, index);
-                size++;
-            }
         }
+        int index = findIndex(r.getUuid());
+        if (index >= 0) {
+            throw new ExistStorageException(r.getUuid());
+        }
+        addResumeToArray(r, index);
+        size++;
+
     }
 
     public abstract void addResumeToArray(Resume r, int i);
