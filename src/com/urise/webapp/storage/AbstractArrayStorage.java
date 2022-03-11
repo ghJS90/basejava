@@ -39,7 +39,7 @@ public abstract class AbstractArrayStorage implements Storage {
             System.arraycopy(storage, index + 1, storage, index, size - index - 1);
             size--;
         } else {
-            System.out.println("\nРезюме " + uuid + " отсутствует в массиве.");
+            throw new NotExistStorageExeption(uuid);
         }
     }
 
