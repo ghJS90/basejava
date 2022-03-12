@@ -56,12 +56,13 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public void save(Resume r) {
+        String uuid = r.getUuid();
         if (size == storage.length) {
-            throw new StorageException("Массив заполнен", r.getUuid());
+            throw new StorageException("Массив заполнен", uuid);
         }
-        int index = findIndex(r.getUuid());
+        int index = findIndex(uuid);
         if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
+            throw new ExistStorageException(uuid);
         }
         addResumeToArray(r, index);
         size++;
