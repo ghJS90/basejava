@@ -1,7 +1,7 @@
 package com.urise.webapp.excepcion;
 
-public class NotExistStorageExeption extends StorageException{
-    public NotExistStorageExeption(String uuid) {
+public class NotExistStorageException extends StorageException{
+    public NotExistStorageException(String uuid) {
         super("Резюме " + uuid + " отсутствует в массиве", uuid);
     }
 }

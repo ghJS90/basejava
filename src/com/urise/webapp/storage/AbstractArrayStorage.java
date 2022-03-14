@@ -1,7 +1,7 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.excepcion.ExistStorageException;
-import com.urise.webapp.excepcion.NotExistStorageExeption;
+import com.urise.webapp.excepcion.NotExistStorageException;
 import com.urise.webapp.excepcion.StorageException;
 import com.urise.webapp.model.Resume;
 
@@ -10,7 +10,7 @@ import java.util.Arrays;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage implements Storage {
+public abstract class AbstractArrayStorage extends AbstractStorage {
     protected static final int STORAGE_LIMIT = 10000;
 
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -19,7 +19,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void update(Resume r) {
         int index = findIndex(r.getUuid());
         if (index < 0) {
-            throw new NotExistStorageExeption(r.getUuid());
+            throw new NotExistStorageException(r.getUuid());
         }
         storage[index] = r;
     }
@@ -39,7 +39,7 @@ public abstract class AbstractArrayStorage implements Storage {
             System.arraycopy(storage, index + 1, storage, index, size - index - 1);
             size--;
         } else {
-            throw new NotExistStorageExeption(uuid);
+            throw new NotExistStorageException(uuid);
         }
     }
 
@@ -52,7 +52,7 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index >= 0) {
             return storage[index];
         }
-        throw new NotExistStorageExeption(uuid);
+        throw new NotExistStorageException(uuid);
     }
 
     public void save(Resume r) {

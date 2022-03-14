@@ -1,7 +1,7 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.excepcion.ExistStorageException;
-import com.urise.webapp.excepcion.NotExistStorageExeption;
+import com.urise.webapp.excepcion.NotExistStorageException;
 import com.urise.webapp.excepcion.StorageException;
 import com.urise.webapp.model.Resume;
 import org.junit.Before;
@@ -31,14 +31,14 @@ public abstract class AbstractArrayStorageTest {
         storage.save(new Resume(UUID_3));
     }
 
-    @Test(expected = NotExistStorageExeption.class)
+    @Test(expected = NotExistStorageException.class)
     public void updateException() {
         Resume testResume = new Resume(UUID_4);
         storage.update(testResume);
     }
 
     @Test
-    public void update() throws NotExistStorageExeption {
+    public void update() throws NotExistStorageException {
         Resume testResume = new Resume(UUID_3);
         storage.update(testResume);
         assertSame(testResume, storage.get(UUID_3));
@@ -55,13 +55,13 @@ public abstract class AbstractArrayStorageTest {
         assertEquals(3, storage.size());
     }
 
-    @Test(expected = NotExistStorageExeption.class)
+    @Test(expected = NotExistStorageException.class)
     public void deleteException() {
         storage.delete(UUID_1);
         storage.get(UUID_1);
     }
 
-    @Test(expected = NotExistStorageExeption.class)
+    @Test(expected = NotExistStorageException.class)
     public void delete() {
         storage.delete(UUID_1);
         assertEquals(storage.size(), 2);
@@ -74,7 +74,7 @@ public abstract class AbstractArrayStorageTest {
         assertArrayEquals(test, storage.getAll());
     }
 
-    @Test(expected = NotExistStorageExeption.class)
+    @Test(expected = NotExistStorageException.class)
     public void getException() {
         storage.get("dummy");
     }
