@@ -1,4 +1,6 @@
 package com.urise.webapp.storage;
 
-public class ListStorageTest {
+public class ListStorageTest extends AbstractStorageTest {
+
+
 }
