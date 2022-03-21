@@ -16,14 +16,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public void update(Resume r) {
-        int index = findIndex(r.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(r.getUuid());
-        }
-        storage[index] = r;
-    }
-
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
@@ -33,26 +25,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    public void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (index >= 0) {
-            System.arraycopy(storage, index + 1, storage, index, size - index - 1);
-            size--;
-        } else {
-            throw new NotExistStorageException(uuid);
-        }
-    }
-
     public Resume[] getAll() {
         return Arrays.copyOf(storage, size);
-    }
-
-    public Resume get(String uuid) {
-        int index = findIndex(uuid);
-        if (index >= 0) {
-            return storage[index];
-        }
-        throw new NotExistStorageException(uuid);
     }
 
     public void save(Resume r) {
@@ -64,12 +38,24 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         if (index >= 0) {
             throw new ExistStorageException(uuid);
         }
-        addResumeToArray(r, index);
+        addResumeByIndex(r, index);
         size++;
-
     }
 
-    public abstract void addResumeToArray(Resume r, int i);
+    @Override
+    public Resume getByIndex(int index) {
+        return storage[index];
+    }
 
+    @Override
+    public void removeByIndex(int index) {
+        System.arraycopy(storage, index + 1, storage, index, size - index - 1);
+        size--;
+    }
+
+    @Override
+    public abstract void addResumeByIndex(Resume r, int i);
+
+    @Override
     protected abstract int findIndex(String uuid);
 }
