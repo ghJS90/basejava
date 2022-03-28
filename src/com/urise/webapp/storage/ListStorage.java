@@ -17,16 +17,13 @@ public class ListStorage extends AbstractStorage {
 
     @Override
     public void save(Resume r) {
-        int index = findIndex(r.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        }
+        checkForExist(r);
         storage.add(r);
     }
 
     @Override
     public Resume[] getAll() {
-        return Arrays.copyOf(storage.toArray(new Resume[0]), storage.size());
+        return storage.toArray(new Resume[0]);
     }
 
     @Override
@@ -45,17 +42,17 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume getByIndex(int index) {
+    public Resume getResume(int index) {
         return storage.get(index);
     }
 
     @Override
-    public void addResumeByIndex(Resume r, int i) {
+    public void saveToArray(Resume r, int i) {
         storage.set(i, r);
     }
 
     @Override
-    public void removeByIndex(int index) {
-       storage.remove(index);
+    public void removeResume(int index) {
+        storage.remove(index);
     }
 }
