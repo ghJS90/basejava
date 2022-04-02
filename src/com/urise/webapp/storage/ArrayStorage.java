@@ -8,13 +8,15 @@ import com.urise.webapp.model.Resume;
 public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
-    public void saveToArray(Resume r, int index) {
-        if (index < 0){
-            storage[size] = r;
-        } else {
-            storage[index] = r;
-        }
+    public void saveResume(int index, Resume r) {
+        checkForFilled(r);
+        storage[size] = r;
+        size++;
+    }
 
+    @Override
+    public void updateResume(int index, Resume r) {
+        storage[index] = r;
     }
 
     @Override

@@ -1,7 +1,5 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.excepcion.ExistStorageException;
-import com.urise.webapp.excepcion.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.*;
@@ -13,12 +11,6 @@ public class ListStorage extends AbstractStorage {
     @Override
     public void clear() {
         storage.clear();
-    }
-
-    @Override
-    public void save(Resume r) {
-        checkForExist(r);
-        storage.add(r);
     }
 
     @Override
@@ -47,8 +39,13 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void saveToArray(Resume r, int i) {
+    public void updateResume(int i, Resume r) {
         storage.set(i, r);
+    }
+
+    @Override
+    public void saveResume(int i, Resume r) {
+        storage.add(r);
     }
 
     @Override

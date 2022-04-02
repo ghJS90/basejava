@@ -28,17 +28,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void save(Resume r) {
-        if (size == storage.length) {
-            throw new StorageException("Массив заполнен", r.getUuid());
-        }
-        checkForExist(r);
-        int index = findIndex(r.getUuid());
-        saveToArray(r, index);
-        size++;
-    }
-
-    @Override
     public Resume getResume(int index) {
         return storage[index];
     }
@@ -49,9 +38,18 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size--;
     }
 
+    public void checkForFilled(Resume r) {
+        if (size == storage.length) {
+            throw new StorageException("Массив заполнен", r.getUuid());
+        }
+    }
+
     @Override
-    public abstract void saveToArray(Resume r, int i);
+    public abstract void saveResume(int i, Resume r);
 
     @Override
     protected abstract int findIndex(String uuid);
+
+    @Override
+    public abstract void updateResume(int i, Resume r);
 }
