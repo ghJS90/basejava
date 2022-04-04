@@ -9,7 +9,7 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     public void saveResume(int index, Resume r) {
-        upSize(r);
+        expandSize(r);
         storage[size] = r;
     }
 

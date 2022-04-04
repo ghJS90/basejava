@@ -38,7 +38,7 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size--;
     }
 
-    public void upSize(Resume r) {
+    public void expandSize(Resume r) {
         if (size == storage.length) {
             throw new StorageException("Массив заполнен", r.getUuid());
         }
