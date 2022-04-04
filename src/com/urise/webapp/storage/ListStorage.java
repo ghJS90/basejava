@@ -6,7 +6,7 @@ import java.util.*;
 
 public class ListStorage extends AbstractStorage {
 
-    protected final List<Resume> storage = new ArrayList<>();
+    private final List<Resume> storage = new ArrayList<>();
 
     @Override
     public void clear() {
@@ -26,7 +26,7 @@ public class ListStorage extends AbstractStorage {
     @Override
     public int findIndex(String uuid) {
         for (int i = 0; i < storage.size(); i++) {
-            if ((storage.get(i)).getUuid().equals(uuid)) {
+            if (storage.get(i).getUuid().equals(uuid)) {
                 return i;
             }
         }

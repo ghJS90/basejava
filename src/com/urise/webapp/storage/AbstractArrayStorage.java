@@ -38,10 +38,16 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size--;
     }
 
-    public void checkForFilled(Resume r) {
+    public void checkForSave(Resume r) {
         if (size == storage.length) {
             throw new StorageException("Массив заполнен", r.getUuid());
         }
+        size++;
+    }
+
+    @Override
+    public void updateResume(int index, Resume r) {
+        storage[index] = r;
     }
 
     @Override
@@ -50,6 +56,4 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     @Override
     protected abstract int findIndex(String uuid);
 
-    @Override
-    public abstract void updateResume(int i, Resume r);
 }
