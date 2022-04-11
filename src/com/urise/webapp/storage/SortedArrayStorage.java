@@ -20,3 +20,4 @@ public class SortedArrayStorage extends AbstractArrayStorage {
     }
 }
 
+
