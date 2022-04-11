@@ -59,10 +59,9 @@ public class MapStorage extends AbstractStorage {
         int size = storage.size();
         Resume[] result = new Resume[size];
         int i = 0;
-        for (Map.Entry<String, Resume> entry : storage.entrySet()){
+        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
             result[i++] = entry.getValue();
         }
-//        storage.values().toArray();
         return result;
     }
 
