@@ -14,6 +14,7 @@ public class MapStorage extends AbstractStorage {
             if (uuid.equals(entry.getValue().getUuid())) {
                 return index;
             }
+            index++;
         }
         return -1;
     }
