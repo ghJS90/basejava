@@ -8,47 +8,53 @@ public abstract class AbstractStorage implements Storage {
 
     @Override
     public void update(Resume r) {
-        int index = findIndex(r.getUuid());
-        if (index < 0) {
-            throw new NotExistStorageException(r.getUuid());
-        }
-        updateResume(index, r);
+        Object searchKey = checkForNotExist(r.getUuid());
+        updateResume(searchKey, r);
     }
 
     @Override
     public void save(Resume r) {
-        int index = findIndex(r.getUuid());
-        if (index >= 0) {
-            throw new ExistStorageException(r.getUuid());
-        }
-        saveResume(index, r);
+        Object searchKey = checkForExist(r.getUuid());
+        saveResume(searchKey, r);
     }
 
     @Override
     public Resume get(String uuid) {
-        int index = findIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        return getResume(index);
+        Object searchKey = checkForNotExist(uuid);
+        return getResume(searchKey);
     }
 
     public void delete(String uuid) {
-        int index = findIndex(uuid);
-        if (index < 0) {
-            throw new NotExistStorageException(uuid);
-        }
-        removeResume(index);
+        Object searchKey = checkForNotExist(uuid);
+        removeResume(searchKey);
     }
 
-    protected abstract int findIndex(String uuid);
+    public Object checkForExist(String uuid) {
+        Object searchKey = findKey(uuid);
+        if (isExist(searchKey)) {
+            throw new ExistStorageException(uuid);
+        }
+        return searchKey;
+    }
 
-    public abstract Resume getResume(int index);
+    public Object checkForNotExist(String uuid) {
+        Object searchKey = findKey(uuid);
+        if (!isExist(searchKey)) {
+            throw new NotExistStorageException(uuid);
+        }
+        return searchKey;
+    }
 
-    public abstract void saveResume(int i, Resume r);
+    protected abstract Object findKey(String uuid);
 
-    public abstract void removeResume(int i);
+    public abstract Resume getResume(Object key);
 
-    public abstract void updateResume(int i, Resume r);
+    public abstract void saveResume(Object key, Resume r);
+
+    public abstract void removeResume(Object key);
+
+    public abstract void updateResume(Object key, Resume r);
+
+    public abstract boolean isExist(Object key);
 
 }

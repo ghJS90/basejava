@@ -8,44 +8,29 @@ public class MapStorage extends AbstractStorage {
     private final Map<String, Resume> storage = new HashMap<>();
 
     @Override
-    protected int findIndex(String uuid) {
-        int index = 0;
-        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
-            if (uuid.equals(entry.getValue().getUuid())) {
-                return index;
-            }
-            index++;
-        }
-        return -1;
+    protected Object findKey(String uuid) {
+        return uuid;
     }
 
     @Override
-    public Resume getResume(int index) {
-        int i = 0;
-        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
-            if (i == index) {
-                return entry.getValue();
-            }
-            i++;
-        }
-        return null;
+    public Resume getResume(Object key) {
+        return storage.get((String) key);
     }
 
     @Override
-    public void saveResume(int i, Resume r) {
-        String key = r.getUuid();
-        storage.put(key, r);
+    public void saveResume(Object key, Resume r) {
+        storage.put((String) key, r);
     }
 
     @Override
-    public void removeResume(int i) {
-        Resume result = getResume(i);
+    public void removeResume(Object key) {
+        Resume result = getResume(key);
         storage.remove(result.getUuid());
     }
 
     @Override
-    public void updateResume(int i, Resume r) {
-        Resume oldResume = getResume(i);
+    public void updateResume(Object key, Resume r) {
+        Resume oldResume = getResume(key);
         storage.replace(oldResume.getUuid(), r);
     }
 
@@ -68,5 +53,15 @@ public class MapStorage extends AbstractStorage {
     @Override
     public int size() {
         return storage.size();
+    }
+
+    @Override
+    public boolean isExist(Object key) {
+        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
+            if ((key.toString()).equals(entry.getValue().getUuid())) {
+                return true;
+            }
+        }
+        return false;
     }
 }

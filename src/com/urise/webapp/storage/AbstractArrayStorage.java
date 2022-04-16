@@ -28,33 +28,38 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume getResume(int index) {
-        return storage[index];
+    public Resume getResume(Object index) {
+        return storage[(Integer) index];
     }
 
     @Override
-    public void removeResume(int index) {
-        System.arraycopy(storage, index + 1, storage, index, size - index - 1);
+    public void removeResume(Object index) {
+        System.arraycopy(storage, (Integer) index + 1, storage, (Integer) index, size - (Integer) index - 1);
         size--;
     }
 
     @Override
-    public void updateResume(int index, Resume r) {
-        storage[index] = r;
+    public void updateResume(Object index, Resume r) {
+        storage[(Integer) index] = r;
     }
 
     @Override
-    public void saveResume(int i, Resume r) {
+    public void saveResume(Object index, Resume r) {
         if (size == storage.length) {
             throw new StorageException("Массив заполнен", r.getUuid());
         }
-        addResume(i, r);
+        addResume((Integer) index, r);
         size++;
+    }
+
+    @Override
+    public boolean isExist(Object index){
+        return (Integer) index >=0;
     }
 
     public abstract void addResume(int i, Resume r);
 
     @Override
-    protected abstract int findIndex(String uuid);
+    protected abstract Object findKey(String uuid);
 
 }
