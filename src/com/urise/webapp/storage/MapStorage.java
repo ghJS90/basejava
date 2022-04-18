@@ -24,14 +24,12 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public void removeResume(Object key) {
-        Resume result = getResume(key);
-        storage.remove(result.getUuid());
+        storage.remove((String) key);
     }
 
     @Override
     public void updateResume(Object key, Resume r) {
-        Resume oldResume = getResume(key);
-        storage.replace(oldResume.getUuid(), r);
+        storage.replace((String) key, r);
     }
 
     @Override
@@ -41,13 +39,8 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public Resume[] getAll() {
-        int size = storage.size();
-        Resume[] result = new Resume[size];
-        int i = 0;
-        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
-            result[i++] = entry.getValue();
-        }
-        return result;
+        Collection<Resume> values = storage.values();
+        return values.toArray(new Resume[0]);
     }
 
     @Override
@@ -57,11 +50,6 @@ public class MapStorage extends AbstractStorage {
 
     @Override
     public boolean isExist(Object key) {
-        for (Map.Entry<String, Resume> entry : storage.entrySet()) {
-            if ((key.toString()).equals(entry.getValue().getUuid())) {
-                return true;
-            }
-        }
-        return false;
+        return storage.containsKey((String) key);
     }
 }
