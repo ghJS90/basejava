@@ -108,7 +108,6 @@ public abstract class AbstractArrayStorageTest {
         } catch (StorageException e) {
             fail("Переполнение произошло раньше времени");
         }
-        Resume testResume = new Resume();
-        storage.save(testResume);
+        storage.save(new Resume());
     }
 }
