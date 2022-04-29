@@ -13,12 +13,7 @@ public class SortedArrayStorage extends AbstractArrayStorage {
 //        }
 //    }
 
-    public static final Comparator<Resume> RESUME_COMPARATOR = new Comparator<Resume>() {
-        @Override
-        public int compare(Resume o1, Resume o2) {
-            return o1.getUuid().compareTo(o2.getUuid());
-        }
-    };
+    public static final Comparator<Resume> RESUME_COMPARATOR = (o1, o2) -> o1.getUuid().compareTo(o2.getUuid());
 
     @Override
     public void addResume(int index, Resume r) {
