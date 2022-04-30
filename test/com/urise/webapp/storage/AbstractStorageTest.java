@@ -9,7 +9,11 @@ import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public abstract class AbstractStorageTest {
@@ -40,10 +44,9 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void update() throws NotExistStorageException {
-        Resume testResume = new Resume(UUID_3);
-        storage.update(testResume);
-        assertSame(testResume, storage.get(UUID_3));
+    public void update() throws Exception {
+        storage.update(new Resume(UUID_3));
+        assertEquals(new Resume(UUID_3), storage.get(UUID_3));
     }
 
     @Test
@@ -72,8 +75,10 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void getAll() throws Exception {
-        Resume[] test = {new Resume(UUID_1), new Resume(UUID_2), new Resume(UUID_3)};
-        assertArrayEquals(test, storage.getAll());
+        List<Resume> test = Arrays.asList(new Resume(UUID_1), new Resume(UUID_2), new Resume(UUID_3));
+        assertEquals(test.get(0), storage.get(UUID_1));
+        assertEquals(test.get(1), storage.get(UUID_2));
+        assertEquals(test.get(2), storage.get(UUID_3));
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -83,7 +88,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() throws Exception {
-        assertEquals(storage.get(UUID_1), storage.get(UUID_1));
+        assertEquals(new Resume(UUID_1), storage.get(UUID_1));
     }
 
     @Test(expected = ExistStorageException.class)
@@ -94,8 +99,10 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void save() throws Exception {
-        storage.save(new Resume(UUID_4));
-        assertEquals(new Resume(UUID_4), storage.get(UUID_4));
+        Resume testResume = new Resume(UUID_4);
+        storage.save(testResume);
+        assertEquals(testResume, storage.get(UUID_4));
+        assertEquals(4, storage.size());
     }
 
     @Test(expected = StorageException.class)
