@@ -3,10 +3,19 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MapNameStorage extends AbstractStorage {
     private final Map<String, Resume> storage = new HashMap<>();
-    public static final Comparator<Resume> FULLNAME_COMPARATOR = (Resume o1, Resume o2) -> o1.getFullName().compareTo(o2.getFullName());
+    public static final Comparator<Resume> FULLNAME_COMPARATOR = new Comparator<Resume>() {
+        @Override
+        public int compare(Resume o1, Resume o2) {
+            if (o1.getFullName().compareTo(o2.getFullName()) == 0){
+                return o1.getUuid().compareTo(o2.getUuid());
+            }
+            return o1.getFullName().compareTo(o2.getFullName());
+        }
+    };
 
     @Override
     protected Object findKey(String fullName) {
@@ -45,7 +54,10 @@ public class MapNameStorage extends AbstractStorage {
 
     @Override
     public List<Resume> getAllSorted() {
-        return new ArrayList<Resume>(storage.values());
+        return storage.values().stream()
+                .sorted(FULLNAME_COMPARATOR)
+                .collect(Collectors.toList());
+//        return new ArrayList<Resume>(storage.values());
     }
 
     @Override

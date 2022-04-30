@@ -19,7 +19,7 @@ public class Resume {
         this.uuid = uuid;
     }
 
-    public Resume(String fullName, String uuid){
+    public Resume(String uuid, String fullName){
         this.fullName = fullName;
         this.uuid = uuid;
     }

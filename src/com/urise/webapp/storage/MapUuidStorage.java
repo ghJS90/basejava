@@ -3,9 +3,11 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class MapUuidStorage extends AbstractStorage {
     private final Map<String, Resume> storage = new HashMap<>();
+    public static final Comparator<Resume> UUID_COMPARATOR = (Resume o1, Resume o2) -> o1.getUuid().compareTo(o2.getUuid());
 
     @Override
     protected Object findKey(String uuid) {
@@ -37,9 +39,16 @@ public class MapUuidStorage extends AbstractStorage {
         storage.clear();
     }
 
+    //    @Override
+//    public List<Resume> getAllSorted() {
+//        return new ArrayList<Resume>(storage.values());
+//    }
+
     @Override
     public List<Resume> getAllSorted() {
-        return new ArrayList<Resume>(storage.values());
+        return storage.values().stream()
+                .sorted(UUID_COMPARATOR)
+                .collect(Collectors.toList());
     }
 
     @Override
