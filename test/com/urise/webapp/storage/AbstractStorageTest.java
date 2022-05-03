@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
-import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public abstract class AbstractStorageTest {
@@ -74,11 +73,9 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() throws Exception {
+    public void getAllSorted() throws Exception {
         List<Resume> test = Arrays.asList(new Resume(UUID_1), new Resume(UUID_2), new Resume(UUID_3));
-        assertEquals(test.get(0), storage.get(UUID_1));
-        assertEquals(test.get(1), storage.get(UUID_2));
-        assertEquals(test.get(2), storage.get(UUID_3));
+        assertEquals(test, storage.getAllSorted());
     }
 
     @Test(expected = NotExistStorageException.class)

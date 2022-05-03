@@ -10,16 +10,12 @@ public class MapNameStorage extends AbstractStorage {
     public static final Comparator<Resume> FULLNAME_COMPARATOR = new Comparator<Resume>() {
         @Override
         public int compare(Resume o1, Resume o2) {
-            if (o1.getFullName().compareTo(o2.getFullName()) == 0){
-                return o1.getUuid().compareTo(o2.getUuid());
-            }
             return o1.getFullName().compareTo(o2.getFullName());
         }
     };
 
-    @Override
-    protected Object findKey(String fullName) {
-        return fullName;
+    protected Object searchKey(String uuid) {
+        return uuid;
     }
 
     @Override
@@ -57,7 +53,6 @@ public class MapNameStorage extends AbstractStorage {
         return storage.values().stream()
                 .sorted(FULLNAME_COMPARATOR)
                 .collect(Collectors.toList());
-//        return new ArrayList<Resume>(storage.values());
     }
 
     @Override

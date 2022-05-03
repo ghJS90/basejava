@@ -10,7 +10,7 @@ public class MapUuidStorage extends AbstractStorage {
     public static final Comparator<Resume> UUID_COMPARATOR = (Resume o1, Resume o2) -> o1.getUuid().compareTo(o2.getUuid());
 
     @Override
-    protected Object findKey(String uuid) {
+    protected Object searchKey(String uuid) {
         return uuid;
     }
 
@@ -38,11 +38,6 @@ public class MapUuidStorage extends AbstractStorage {
     public void clear() {
         storage.clear();
     }
-
-    //    @Override
-//    public List<Resume> getAllSorted() {
-//        return new ArrayList<Resume>(storage.values());
-//    }
 
     @Override
     public List<Resume> getAllSorted() {

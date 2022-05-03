@@ -6,46 +6,46 @@ import com.urise.webapp.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    @Override
-    public void update(Resume r) {
-        Object searchKey = checkForNotExist(r.getUuid());
-        updateResume(searchKey, r);
-    }
-
-    @Override
-    public void save(Resume r) {
-        Object searchKey = checkForExist(r.getUuid());
-        saveResume(searchKey, r);
-    }
-
-    @Override
-    public Resume get(String uuid) {
-        Object searchKey = checkForNotExist(uuid);
-        return getResume(searchKey);
-    }
-
     public void delete(String uuid) {
-        Object searchKey = checkForNotExist(uuid);
+        Object searchKey = findNotExistedSearchKey(uuid);
         removeResume(searchKey);
     }
 
-    public Object checkForExist(String uuid) {
-        Object searchKey = findKey(uuid);
+    private Object findExistedSearchKey(String uuid) {
+        Object searchKey = searchKey(uuid);
         if (isExist(searchKey)) {
             throw new ExistStorageException(uuid);
         }
         return searchKey;
     }
 
-    public Object checkForNotExist(String uuid) {
-        Object searchKey = findKey(uuid);
+    private Object findNotExistedSearchKey(String uuid) {
+        Object searchKey = searchKey(uuid);
         if (!isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
         return searchKey;
     }
 
-    protected abstract Object findKey(String uuid);
+    @Override
+    public void update(Resume r) {
+        Object searchKey = findNotExistedSearchKey(r.getUuid());
+        updateResume(searchKey, r);
+    }
+
+    @Override
+    public void save(Resume r) {
+        Object searchKey = findExistedSearchKey(r.getUuid());
+        saveResume(searchKey, r);
+    }
+
+    @Override
+    public Resume get(String uuid) {
+        Object searchKey = findNotExistedSearchKey(uuid);
+        return getResume(searchKey);
+    }
+
+    protected abstract Object searchKey(String uuid);
 
     public abstract Resume getResume(Object key);
 

@@ -24,7 +24,7 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public Object findKey(String uuid) {
+    public Object searchKey(String uuid) {
         for (int key = 0; key < storage.size(); key++) {
             if (storage.get(key).getUuid().equals(uuid)) {
                 return key;

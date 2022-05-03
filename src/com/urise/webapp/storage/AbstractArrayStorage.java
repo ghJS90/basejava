@@ -54,13 +54,9 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public boolean isExist(Object index){
-        return (Integer) index >=0;
+    public boolean isExist(Object index) {
+        return (Integer) index >= 0;
     }
 
     public abstract void addResume(int i, Resume r);
-
-    @Override
-    protected abstract Object findKey(String uuid);
-
 }
