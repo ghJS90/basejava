@@ -8,20 +8,16 @@ import java.util.UUID;
 public class Resume {
 
     // Unique identifier
-    private final String uuid;
+    private String uuid;
     private String fullName;
 
-    public Resume() {
-        this(UUID.randomUUID().toString());
-    }
-
     public Resume(String fullName) {
-        this.uuid = fullName;
+        this.fullName = fullName;
     }
 
     public Resume(String uuid, String fullName) {
-        this.fullName = fullName;
         this.uuid = uuid;
+        this.fullName = fullName;
     }
 
     public String getUuid() {

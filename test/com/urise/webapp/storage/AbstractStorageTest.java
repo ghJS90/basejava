@@ -11,6 +11,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
 import static org.junit.Assert.*;
@@ -106,12 +107,12 @@ public abstract class AbstractStorageTest {
     public void StorageException() {
         try {
             for (int i = storage.size(); i < STORAGE_LIMIT; i++) {
-                Resume testResume = new Resume();
+                Resume testResume = new Resume(UUID_1, "Test Test");
                 storage.save(testResume);
             }
         } catch (StorageException e) {
             fail("Переполнение произошло раньше времени");
         }
-        storage.save(new Resume());
+        storage.save(new Resume(UUID_1, "Test Test"));
     }
 }
