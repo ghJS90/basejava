@@ -1,7 +1,5 @@
 package com.urise.webapp.model;
 
-import java.util.UUID;
-
 /**
  * Initial resume class
  */

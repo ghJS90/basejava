@@ -3,7 +3,6 @@ package com.urise.webapp.storage;
 import com.urise.webapp.model.Resume;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class MapNameStorage extends AbstractStorage {
     private final Map<String, Resume> storage = new HashMap<>();
@@ -13,6 +12,11 @@ public class MapNameStorage extends AbstractStorage {
             return o1.getFullName().compareTo(o2.getFullName());
         }
     };
+
+    @Override
+    public List<Resume> getList() {
+        return (List<Resume>) ((Map<String, Resume>) storage).values();
+    }
 
     protected Object searchKey(String fullName) {
         return fullName;
@@ -48,12 +52,12 @@ public class MapNameStorage extends AbstractStorage {
         storage.clear();
     }
 
-    @Override
-    public List<Resume> getAllSorted() {
-        List<Resume> toGetSortedList = new ArrayList<Resume>(storage.values());
-        toGetSortedList.sort(FULLNAME_COMPARATOR);
-        return toGetSortedList;
-    }
+//    @Override
+//    public List<Resume> getAllSorted() {
+//        List<Resume> toGetSortedList = new ArrayList<Resume>(storage.values());
+//        toGetSortedList.sort(FULLNAME_COMPARATOR);
+//        return toGetSortedList;
+//    }
 
     @Override
     public int size() {
