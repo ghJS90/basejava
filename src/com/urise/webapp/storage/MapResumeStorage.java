@@ -4,22 +4,16 @@ import com.urise.webapp.model.Resume;
 
 import java.util.*;
 
-public class MapNameStorage extends AbstractStorage {
+public class MapResumeStorage extends AbstractStorage {
     private final Map<String, Resume> storage = new HashMap<>();
-    public static final Comparator<Resume> FULLNAME_COMPARATOR = new Comparator<Resume>() {
-        @Override
-        public int compare(Resume o1, Resume o2) {
-            return o1.getFullName().compareTo(o2.getFullName());
-        }
-    };
 
     @Override
     public List<Resume> getList() {
-        return (List<Resume>) ((Map<String, Resume>) storage).values();
+        return new ArrayList<>(storage.values());
     }
 
     protected Object searchKey(String fullName) {
-        return fullName;
+        return storage.get(fullName);
     }
 
     @Override
@@ -51,13 +45,6 @@ public class MapNameStorage extends AbstractStorage {
     public void clear() {
         storage.clear();
     }
-
-//    @Override
-//    public List<Resume> getAllSorted() {
-//        List<Resume> toGetSortedList = new ArrayList<Resume>(storage.values());
-//        toGetSortedList.sort(FULLNAME_COMPARATOR);
-//        return toGetSortedList;
-//    }
 
     @Override
     public int size() {

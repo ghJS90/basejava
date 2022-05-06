@@ -5,7 +5,7 @@ import org.junit.Test;
 
 public class MapNameStorageTest extends AbstractStorageTest{
     public MapNameStorageTest() {
-        super(new MapNameStorage());
+        super(new MapResumeStorage());
     }
 
     @Ignore
