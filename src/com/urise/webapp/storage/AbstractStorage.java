@@ -5,7 +5,6 @@ import com.urise.webapp.excepcion.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
