@@ -8,6 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class AbstractStorage implements Storage {
+
+
     @Override
     public void delete(String uuid) {
         Object searchKey = findExistedSearchKey(uuid);
