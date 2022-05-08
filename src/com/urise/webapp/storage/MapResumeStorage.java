@@ -12,8 +12,8 @@ public class MapResumeStorage extends AbstractStorage {
         return new ArrayList<>(storage.values());
     }
 
-    protected Object searchKey(String fullName) {
-        return storage.get(fullName);
+    protected Object searchKey(String uuid) {
+        return storage.get(uuid);
     }
 
     @Override
