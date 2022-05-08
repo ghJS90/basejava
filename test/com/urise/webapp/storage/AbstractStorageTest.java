@@ -43,15 +43,14 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateException() {
-        Resume testResume = new Resume(UUID_4, "A");
-        storage.update(testResume);
-        assertEquals(testResume, storage.get(UUID_4));
+        storage.update(R_4);
     }
 
     @Test
     public void update() throws Exception {
-        storage.update(new Resume(UUID_3, "A"));
-        assertEquals(new Resume(UUID_3, "A"), storage.get(UUID_3));
+        Resume testResume = new Resume(UUID_3, "F");
+        storage.update(testResume);
+        assertSame(testResume, storage.get(UUID_3));
     }
 
     @Test
@@ -67,21 +66,20 @@ public abstract class AbstractStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void deleteException() {
-        storage.delete(UUID_1);
-        storage.get(UUID_1);
+        storage.delete(UUID_4);
     }
 
     @Test(expected = NotExistStorageException.class)
     public void delete() {
         storage.delete(UUID_1);
-        assertEquals(storage.size(), 2);
+        assertEquals(2, storage.size());
         storage.get(UUID_1);
     }
 
     @Test
     public void getAllSorted() throws Exception {
-        List<Resume> test = Arrays.asList(new Resume(UUID_1, "A"), new Resume(UUID_2, "B"), new Resume(UUID_3, "C"));
-        assertEquals(test, storage.getAllSorted());
+        List<Resume> expected = Arrays.asList(R_1, R_2, R_3);
+        assertEquals(expected, storage.getAllSorted());
     }
 
     @Test(expected = NotExistStorageException.class)
@@ -91,25 +89,23 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() throws Exception {
-        assertEquals(new Resume(UUID_1), storage.get(UUID_1));
+        assertEquals(R_1, storage.get(UUID_1));
     }
 
     @Test(expected = ExistStorageException.class)
     public void saveException() {
-        Resume testResume = new Resume(UUID_3);
-        storage.save(testResume);
+        storage.save(R_3);
     }
 
     @Test
     public void save() throws Exception {
-        Resume testResume = new Resume(UUID_4);
-        storage.save(testResume);
-        assertEquals(testResume, storage.get(UUID_4));
+        storage.save(R_4);
+        assertEquals(R_4, storage.get(UUID_4));
         assertEquals(4, storage.size());
     }
 
     @Test(expected = StorageException.class)
-    public void StorageException() {
+    public void storageException() {
         try {
             for (int i = storage.size(); i < STORAGE_LIMIT; i++) {
                 Resume testResume = new Resume("Test Test " + i);

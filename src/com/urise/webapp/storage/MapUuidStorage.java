@@ -33,8 +33,8 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    public void updateResume(Object key, Resume r) {
-        storage.replace((String) key, r);
+    public void updateResume(Object searchKey, Resume r) {
+        storage.replace((String) searchKey, r);
     }
 
     @Override
