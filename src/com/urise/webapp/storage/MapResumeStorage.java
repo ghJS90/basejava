@@ -33,12 +33,12 @@ public class MapResumeStorage extends AbstractStorage {
 
     @Override
     public void updateResume(Object searchKey, Resume r) {
-        storage.replace(r.getUuid(), (Resume) searchKey);
+        storage.replace(r.getUuid(), r);
     }
 
     @Override
     public boolean isExist(Object key) {
-        return key != null;
+        return storage.containsValue((Resume) key);
     }
 
     @Override

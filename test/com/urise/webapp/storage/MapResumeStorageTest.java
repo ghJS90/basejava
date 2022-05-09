@@ -3,8 +3,8 @@ package com.urise.webapp.storage;
 import org.junit.Ignore;
 import org.junit.Test;
 
-public class MapNameStorageTest extends AbstractStorageTest{
-    public MapNameStorageTest() {
+public class MapResumeStorageTest extends AbstractStorageTest{
+    public MapResumeStorageTest() {
         super(new MapResumeStorage());
     }
 
