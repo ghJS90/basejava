@@ -8,8 +8,8 @@ public class MapUuidStorageTest extends AbstractStorageTest {
         super(new MapUuidStorage());
     }
 
-    @Ignore
-    @Test
-    public void StorageException() {
-    }
+//    @Ignore
+//    @Test
+//    public void StorageException() {
+//    }
 }

@@ -18,18 +18,18 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume getResume(Object key) {
-        return storage.get((String) key);
+    public Resume getResume(Object searchKey) {
+        return storage.get((String) searchKey);
     }
 
     @Override
-    public void saveResume(Object key, Resume r) {
-        storage.put((String) key, r);
+    public void saveResume(Object searchKey, Resume r) {
+        storage.put((String) searchKey, r);
     }
 
     @Override
-    public void removeResume(Object key) {
-        storage.remove((String) key);
+    public void removeResume(Object searchKey) {
+        storage.remove((String) searchKey);
     }
 
     @Override
@@ -48,7 +48,7 @@ public class MapUuidStorage extends AbstractStorage {
     }
 
     @Override
-    public boolean isExist(Object key) {
-        return storage.containsKey((String) key);
+    public boolean isExist(Object searchKey) {
+        return storage.containsKey((String) searchKey);
     }
 }

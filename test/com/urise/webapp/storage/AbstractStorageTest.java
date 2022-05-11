@@ -1,10 +1,9 @@
 package com.urise.webapp.storage;
 
-import com.urise.webapp.excepcion.ExistStorageException;
+import com.urise.webapp.exception.ExistStorageException;
 
 
-import com.urise.webapp.excepcion.NotExistStorageException;
-import com.urise.webapp.excepcion.StorageException;
+import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,12 +11,11 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.urise.webapp.storage.AbstractArrayStorage.STORAGE_LIMIT;
 import static org.junit.Assert.*;
 
 public abstract class AbstractStorageTest {
 
-    private final Storage storage;
+    protected final Storage storage;
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -102,18 +100,5 @@ public abstract class AbstractStorageTest {
         storage.save(R_4);
         assertEquals(R_4, storage.get(UUID_4));
         assertEquals(4, storage.size());
-    }
-
-    @Test(expected = StorageException.class)
-    public void storageException() {
-        try {
-            for (int i = storage.size(); i < STORAGE_LIMIT; i++) {
-                Resume testResume = new Resume("Test Test " + i);
-                storage.save(testResume);
-            }
-        } catch (StorageException e) {
-            fail("Переполнение произошло раньше времени");
-        }
-        storage.save(new Resume(UUID_2, "Test Test"));
     }
 }

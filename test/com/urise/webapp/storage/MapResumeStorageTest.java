@@ -8,8 +8,8 @@ public class MapResumeStorageTest extends AbstractStorageTest{
         super(new MapResumeStorage());
     }
 
-    @Ignore
-    @Test
-    public void StorageException() {
-    }
+//    @Ignore
+//    @Test
+//    public void StorageException() {
+//    }
 }

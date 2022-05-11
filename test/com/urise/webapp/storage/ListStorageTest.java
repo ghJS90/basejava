@@ -7,9 +7,9 @@ public class ListStorageTest extends AbstractStorageTest {
     public ListStorageTest() {
         super(new ListStorage());
     }
-
-    @Ignore
-    @Test
-    public void StorageException() {
-    }
+//
+//    @Ignore
+//    @Test
+//    public void StorageException() {
+//    }
 }
