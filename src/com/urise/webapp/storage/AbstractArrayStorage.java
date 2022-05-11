@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected static final int STORAGE_LIMIT = 10000;
 
     protected final Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -27,41 +27,37 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     @Override
     public List<Resume> getList() {
-        List<Resume> test = new ArrayList<>();
-        for (int i = 0; i < size; i++) {
-            test.add(storage[i]);
-        }
-        return test;
+        return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
     }
 
     @Override
-    public Resume getResume(Object index) {
-        return storage[(Integer) index];
+    public Resume getResume(Integer index) {
+        return storage[index];
     }
 
     @Override
-    public void removeResume(Object index) {
-        System.arraycopy(storage, (Integer) index + 1, storage, (Integer) index, size - (Integer) index - 1);
+    public void removeResume(Integer index) {
+        System.arraycopy(storage, index + 1, storage, index, size - index - 1);
         size--;
     }
 
     @Override
-    public void updateResume(Object index, Resume r) {
-        storage[(Integer) index] = r;
+    public void updateResume(Integer index, Resume r) {
+        storage[index] = r;
     }
 
     @Override
-    public void saveResume(Object index, Resume r) {
+    public void saveResume(Integer index, Resume r) {
         if (size == storage.length) {
             throw new StorageException("Массив заполнен", r.getUuid());
         }
-        addResume((Integer) index, r);
+        addResume(index, r);
         size++;
     }
 
     @Override
-    public boolean isExist(Object index) {
-        return (Integer) index >= 0;
+    public boolean isExist(Integer index) {
+        return index >= 0;
     }
 
     public abstract void addResume(int i, Resume r);

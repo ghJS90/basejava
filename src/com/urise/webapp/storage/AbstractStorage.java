@@ -7,30 +7,30 @@ import com.urise.webapp.model.Resume;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<SK> implements Storage {
 
 
     @Override
     public void delete(String uuid) {
-        Object searchKey = findExistedSearchKey(uuid);
+        SK searchKey = findExistedSearchKey(uuid);
         removeResume(searchKey);
     }
 
     @Override
     public void update(Resume r) {
-        Object searchKey = findExistedSearchKey(r.getUuid());
+        SK searchKey = findExistedSearchKey(r.getUuid());
         updateResume(searchKey, r);
     }
 
     @Override
     public void save(Resume r) {
-        Object searchKey = findNotExistedSearchKey(r.getUuid());
+        SK searchKey = findNotExistedSearchKey(r.getUuid());
         saveResume(searchKey, r);
     }
 
     @Override
     public Resume get(String uuid) {
-        Object searchKey = findExistedSearchKey(uuid);
+        SK searchKey = findExistedSearchKey(uuid);
         return getResume(searchKey);
     }
 
@@ -41,16 +41,16 @@ public abstract class AbstractStorage implements Storage {
         return list;
     }
 
-    private Object findNotExistedSearchKey(String uuid) {
-        Object searchKey = searchKey(uuid);
+    private SK findNotExistedSearchKey(String uuid) {
+        SK searchKey = searchKey(uuid);
         if (isExist(searchKey)) {
             throw new ExistStorageException(uuid);
         }
         return searchKey;
     }
 
-    private Object findExistedSearchKey(String uuid) {
-        Object searchKey = searchKey(uuid);
+    private SK findExistedSearchKey(String uuid) {
+        SK searchKey = searchKey(uuid);
         if (!isExist(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
@@ -59,16 +59,16 @@ public abstract class AbstractStorage implements Storage {
 
     public abstract List<Resume> getList();
 
-    protected abstract Object searchKey(String uuid);
+    protected abstract SK searchKey(String uuid);
 
-    public abstract Resume getResume(Object searchKey);
+    public abstract Resume getResume(SK searchKey);
 
-    public abstract void saveResume(Object searchKey, Resume r);
+    public abstract void saveResume(SK searchKey, Resume r);
 
-    public abstract void removeResume(Object searchKey);
+    public abstract void removeResume(SK searchKey);
 
-    public abstract void updateResume(Object searchKey, Resume r);
+    public abstract void updateResume(SK searchKey, Resume r);
 
-    public abstract boolean isExist(Object searchKey);
+    public abstract boolean isExist(SK searchKey);
 
 }
