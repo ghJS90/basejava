@@ -19,22 +19,22 @@ public class MapUuidStorage extends AbstractStorage<String> {
 
     @Override
     public Resume getResume(String searchKey) {
-        return storage.get((String) searchKey);
+        return storage.get(searchKey);
     }
 
     @Override
     public void saveResume(String searchKey, Resume r) {
-        storage.put((String) searchKey, r);
+        storage.put(searchKey, r);
     }
 
     @Override
     public void removeResume(String searchKey) {
-        storage.remove((String) searchKey);
+        storage.remove(searchKey);
     }
 
     @Override
     public void updateResume(String searchKey, Resume r) {
-        storage.replace((String) searchKey, r);
+        storage.replace(searchKey, r);
     }
 
     @Override
