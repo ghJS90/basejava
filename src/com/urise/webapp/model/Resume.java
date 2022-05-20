@@ -1,8 +1,10 @@
 package com.urise.webapp.model;
 
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.UUID;
+import com.urise.webapp.model.section.AbstractSection;
+
+import java.util.*;
+
+import static com.urise.webapp.model.ContactType.*;
 
 /**
  * Initial resume class
@@ -12,6 +14,8 @@ public class Resume implements Comparable<Resume> {
     // Unique identifier
     private final String uuid;
     private final String fullName;
+    protected EnumMap<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
+    protected EnumMap<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
     public Resume(String fullName) {
         this(fullName, UUID.randomUUID().toString());
@@ -22,10 +26,23 @@ public class Resume implements Comparable<Resume> {
         Objects.requireNonNull(fullName, "fullName must not be null");
         this.uuid = uuid;
         this.fullName = fullName;
+
     }
 
     public String getUuid() {
         return uuid;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public EnumMap<SectionType, AbstractSection> getSections() {
+        return sections;
+    }
+
+    public EnumMap<ContactType, String> getContacts() {
+        return contacts;
     }
 
     @Override
