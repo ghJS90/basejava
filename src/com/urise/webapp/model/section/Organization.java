@@ -1,6 +1,7 @@
 package com.urise.webapp.model.section;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 public class Organization {
     private final LocalDate dateFrom;
@@ -44,5 +45,18 @@ public class Organization {
                 "," + organizationName +
                 "," + position +
                 "," + description;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Organization that = (Organization) o;
+        return dateFrom.equals(that.dateFrom) && Objects.equals(dateTo, that.dateTo) && organizationName.equals(that.organizationName) && Objects.equals(position, that.position) && description.equals(that.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(dateFrom, dateTo, organizationName, position, description);
     }
 }
