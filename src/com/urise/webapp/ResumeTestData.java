@@ -52,13 +52,15 @@ public class ResumeTestData {
         Organization organization8 = new Organization(LocalDate.of(1997, 9,1), LocalDate.of(2005, 1,1), "Alcatel", "Инженер по аппаратному и программному тестированию", "Тестирование, отладка, внедрение ПО цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM).");
 
         Organization organization9 = new Organization(LocalDate.of(2013, 3,1), LocalDate.of(2013, 5,1), "Coursera", null, "\n" + "'Functional Programming Principles in Scala' by Martin Odersky");
-        Organization organization10 = new Organization(LocalDate.of(2013, 3,1), LocalDate.of(2013, 5,1), "Coursera", null, "\n" + "'Functional Programming Principles in Scala' by Martin Odersky");
-        Organization organization11 = new Organization(LocalDate.of(2013, 3,1), LocalDate.of(2013, 5,1), "Coursera", null, "\n" + "'Functional Programming Principles in Scala' by Martin Odersky");
-        Organization organization12 = new Organization(LocalDate.of(2013, 3,1), LocalDate.of(2013, 5,1), "Coursera", null, "\n" + "'Functional Programming Principles in Scala' by Martin Odersky");
-        Organization organization13 = new Organization(LocalDate.of(2013, 3,1), LocalDate.of(2013, 5,1), "Coursera", null, "\n" + "'Functional Programming Principles in Scala' by Martin Odersky");
+        Organization organization10 = new Organization(LocalDate.of(2011, 3,1), LocalDate.of(2011, 4,1), "Siemens AG", null, "\n" + "3 месяца обучения мобильным IN сетям (Берлин)");
+        Organization organization11 = new Organization(LocalDate.of(1997, 9,1), LocalDate.of(1998, 3,1), "Alcatel", null, "\n" + "6 месяцев обучения цифровым телефонным сетям (Москва)");
+        Organization organization12 = new Organization(LocalDate.of(1993, 9,1), LocalDate.of(1996, 7,1), "Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", null, "Аспирантура (программист С, С++)");
+        Organization organization13 = new Organization(LocalDate.of(1987, 9,1), LocalDate.of(1993, 7,1), "Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", null, "Инженер (программист Fortran, C)");
+        Organization organization14 = new Organization(LocalDate.of(1984, 9,1), LocalDate.of(1987, 6,1), "Заочная физико-техническая школа при МФТИ", null, "Закончил с отличием");
+
 
         OrganizationSection experience = new OrganizationSection(Arrays.asList(organization1, organization2, organization3, organization4, organization5, organization6, organization7, organization8));
-        OrganizationSection education = new OrganizationSection(Arrays.asList(organization9, organization10, organization11, organization12, organization13));
+        OrganizationSection education = new OrganizationSection(Arrays.asList(organization9, organization10, organization11, organization12, organization13, organization14));
 
         Resume testResume = new Resume(uuid, fullname);
         testResume.getContacts().put(ContactType.PHONE, "+7(921) 855-0482");
