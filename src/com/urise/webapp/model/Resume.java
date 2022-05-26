@@ -26,7 +26,6 @@ public class Resume implements Comparable<Resume> {
         Objects.requireNonNull(fullName, "fullName must not be null");
         this.uuid = uuid;
         this.fullName = fullName;
-
     }
 
     public String getUuid() {
@@ -50,12 +49,12 @@ public class Resume implements Comparable<Resume> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resume resume = (Resume) o;
-        return uuid.equals(resume.uuid) && fullName.equals(resume.fullName);
+        return uuid.equals(resume.uuid) && fullName.equals(resume.fullName) && sections.equals(resume.sections) && contacts.equals(resume.contacts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, fullName);
+        return Objects.hash(uuid, fullName, sections, contacts);
     }
 
     @Override

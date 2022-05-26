@@ -34,12 +34,12 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    public Resume getResume(Integer key) {
+    public Resume doGet(Integer key) {
         return storage.get(key);
     }
 
     @Override
-    public void updateResume(Integer key, Resume r) {
+    public void doUpdate(Integer key, Resume r) {
         storage.set( key, r);
     }
 
@@ -49,12 +49,12 @@ public class ListStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    public void saveResume(Integer key, Resume r) {
+    public void doSave(Integer key, Resume r) {
         storage.add(r);
     }
 
     @Override
-    public void removeResume(Integer key) {
+    public void doDelete(Integer key) {
         storage.remove((int) key);
     }
 }

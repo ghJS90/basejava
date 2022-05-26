@@ -6,6 +6,7 @@ public class ListSection extends AbstractSection {
     private final List<String> descriptionList = new ArrayList<>();
 
     public void addStrings(String... text){
+        Objects.requireNonNull(text, "text must not be null");
         descriptionList.addAll(Arrays.asList(text));
     }
 
@@ -23,7 +24,7 @@ public class ListSection extends AbstractSection {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ListSection that = (ListSection) o;
-        return Objects.equals(descriptionList, that.descriptionList);
+        return descriptionList.equals(that.descriptionList);
     }
 
     @Override

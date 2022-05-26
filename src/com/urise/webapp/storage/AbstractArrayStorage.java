@@ -31,23 +31,23 @@ public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     }
 
     @Override
-    public Resume getResume(Integer index) {
+    public Resume doGet(Integer index) {
         return storage[index];
     }
 
     @Override
-    public void removeResume(Integer index) {
+    public void doDelete(Integer index) {
         System.arraycopy(storage, index + 1, storage, index, size - index - 1);
         size--;
     }
 
     @Override
-    public void updateResume(Integer index, Resume r) {
+    public void doUpdate(Integer index, Resume r) {
         storage[index] = r;
     }
 
     @Override
-    public void saveResume(Integer index, Resume r) {
+    public void doSave(Integer index, Resume r) {
         if (size == storage.length) {
             throw new StorageException("Массив заполнен", r.getUuid());
         }
