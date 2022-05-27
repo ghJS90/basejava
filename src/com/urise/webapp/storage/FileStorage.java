@@ -11,7 +11,7 @@ public class FileStorage extends AbstractFileStorage {
     }
 
     @Override
-    protected void doWrite(Resume r, File file){
+    protected void doWrite(Resume r, File file) {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file))) {
             oos.writeObject(r);
             System.out.println("Резюме " + r + " записано в файл.");

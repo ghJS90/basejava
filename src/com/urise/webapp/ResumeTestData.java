@@ -91,7 +91,8 @@ public class ResumeTestData {
 //        ARRAY_STORAGE.delete("test");
 
     }
-    public static void getResumeInfo(Resume resume){
+
+    public static void getResumeInfo(Resume resume) {
         System.out.println(resume.getUuid());
         System.out.println(resume.getFullName());
         System.out.println(resume.getContacts().values());
