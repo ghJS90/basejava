@@ -2,14 +2,13 @@ package com.urise.webapp.model;
 
 import com.urise.webapp.model.section.AbstractSection;
 
+import java.io.Serializable;
 import java.util.*;
-
-import static com.urise.webapp.model.ContactType.*;
 
 /**
  * Initial resume class
  */
-public class Resume implements Comparable<Resume> {
+public class Resume implements Serializable, Comparable<Resume> {
 
     // Unique identifier
     private final String uuid;

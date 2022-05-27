@@ -3,10 +3,11 @@ package com.urise.webapp.model.section;
 import com.urise.webapp.model.Link;
 import com.urise.webapp.model.Position;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Organization {
+public class Organization implements Serializable {
     private final Link homePage;
     private final List<Position> positions = new ArrayList<>();
 

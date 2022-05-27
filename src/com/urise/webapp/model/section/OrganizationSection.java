@@ -1,11 +1,12 @@
 package com.urise.webapp.model.section;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class OrganizationSection extends AbstractSection {
+public class OrganizationSection extends AbstractSection implements Serializable {
     private final List<Organization> organizations = new ArrayList<>();
 
 public void addOrganization(Organization... organization){

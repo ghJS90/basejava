@@ -5,11 +5,17 @@ import com.urise.webapp.model.section.ListSection;
 import com.urise.webapp.model.section.Organization;
 import com.urise.webapp.model.section.OrganizationSection;
 import com.urise.webapp.model.section.StringSection;
+import com.urise.webapp.storage.FileStorage;
+import com.urise.webapp.storage.Storage;
 
+import java.io.File;
 import java.time.LocalDate;
 
 public class ResumeTestData {
+    private final static Storage ARRAY_STORAGE = new FileStorage(new File("C:/testFileStorage"));
+
     public static void main(String[] args) {
+
         String uuid = "uuid1";
         String fullname = "Григорий Кислин";
         ListSection achievement = new ListSection();
@@ -69,9 +75,26 @@ public class ResumeTestData {
         testResume.getSections().put(SectionType.EXPERIENCE, experience);
         testResume.getSections().put(SectionType.EDUCATION, education);
 
-        System.out.println(testResume.getUuid());
-        System.out.println(testResume.getFullName());
-        System.out.println(testResume.getContacts().values());
-        System.out.println(testResume.getSections().values());
+//        getResumeInfo(testResume);
+
+        Resume resumeForUpdate = new Resume(uuid, "Новый Сотрудник");
+
+        ARRAY_STORAGE.clear();
+        ARRAY_STORAGE.size();
+        ARRAY_STORAGE.save(testResume);
+        ARRAY_STORAGE.size();
+        getResumeInfo(ARRAY_STORAGE.get(uuid));
+        ARRAY_STORAGE.update(resumeForUpdate);
+        getResumeInfo(ARRAY_STORAGE.get(uuid));
+//        ARRAY_STORAGE.delete(uuid);
+//        ARRAY_STORAGE.clear();
+//        ARRAY_STORAGE.delete("test");
+
+    }
+    public static void getResumeInfo(Resume resume){
+        System.out.println(resume.getUuid());
+        System.out.println(resume.getFullName());
+        System.out.println(resume.getContacts().values());
+        System.out.println(resume.getSections().values());
     }
 }

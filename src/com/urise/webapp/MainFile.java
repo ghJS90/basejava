@@ -3,6 +3,9 @@ package com.urise.webapp;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class MainFile {
     public static void main(String[] args) {
@@ -31,30 +34,21 @@ public class MainFile {
         }
 
         String path = "C:\\BASEJAVA\\basejava";
-        int countFiles = 0;
-        int countDir = 0;
         walk(path);
-        System.out.println( + countDir + "\nFiles: " + countFiles);
     }
 
     public static void walk(String path) {
 
         File root = new File(path);
         File[] list = root.listFiles();
-        int countFiles = 0;
-        int countDir = 0;
         if (list == null) return;
-
         for (File f : list) {
             if (f.isDirectory()) {
                 walk(f.getAbsolutePath());
                 System.out.println("Dir:" + f.getAbsoluteFile());
-                countDir++;
             } else {
                 System.out.println("File:" + f.getAbsoluteFile());
-                countFiles++;
             }
         }
-
     }
 }

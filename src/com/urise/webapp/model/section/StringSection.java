@@ -1,8 +1,9 @@
 package com.urise.webapp.model.section;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class StringSection extends AbstractSection {
+public class StringSection extends AbstractSection implements Serializable {
     private final String description;
 
     public StringSection(String description) {

@@ -3,14 +3,16 @@ package com.urise.webapp;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.*;
 
+import java.io.File;
+
 /**
  * Test for your com.urise.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    private final static Storage ARRAY_STORAGE = new MapResumeStorage();
+    private final static Storage ARRAY_STORAGE = new ListStorage();
 
     public static void main(String[] args) {
-        Resume r1 = new Resume("uuid1", "A");
+        Resume r1 = new Resume("uuid1", "NAME_ONE");
         Resume r2 = new Resume("uuid2", "B");
         Resume r3 = new Resume("uuid3", "C");
 
