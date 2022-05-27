@@ -16,6 +16,7 @@ public class Position {
         this.position = position;
         this.description = description;
     }
+
     public LocalDate getDateFrom() {
         return dateFrom;
     }
@@ -34,19 +35,10 @@ public class Position {
 
     @Override
     public String toString() {
-        if (dateTo == null) {
-            return "\nPosition:\n" +
-                    "\ndateFrom:\n" + dateFrom +
-                    "\ndateTo:\n" + "Текущее время" +
-                    "\nДолжность:\n" + position +
-                    "\nОписание деятельности:\n" + description +
-                    "\n*\n";
-        }
-        return "\nPosition:\n" +
-                "\ndateFrom:\n" + dateFrom +
-                "\ndateTo:\n" + dateTo +
-                "\nДолжность:\n" + position +
-                "\nОписание деятельности:\n" + description +
+        return "\ndateFrom: " + dateFrom +
+                "\ndateTo: " + (dateTo == null ? "Текущее время" : dateTo) +
+                "\nДолжность: " + position +
+                "\nОписание деятельности: " + description +
                 "\n*\n";
     }
 
