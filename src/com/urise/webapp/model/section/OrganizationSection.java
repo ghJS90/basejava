@@ -9,9 +9,9 @@ import java.util.Objects;
 public class OrganizationSection extends AbstractSection implements Serializable {
     private final List<Organization> organizations = new ArrayList<>();
 
-public void addOrganization(Organization... organization){
-    organizations.addAll(Arrays.asList(organization));
-}
+    public void addOrganization(Organization... organization) {
+        organizations.addAll(Arrays.asList(organization));
+    }
 
     public List<Organization> getOrganizations() {
         return organizations;

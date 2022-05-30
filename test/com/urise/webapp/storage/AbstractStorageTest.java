@@ -1,8 +1,6 @@
 package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.ExistStorageException;
-
-
 import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.Resume;
 import org.junit.Before;
@@ -11,21 +9,20 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 public abstract class AbstractStorageTest {
-
-    protected final Storage storage;
 
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
     private static final String UUID_4 = "uuid4";
-
     private static final Resume R_1 = new Resume(UUID_1, "A");
     private static final Resume R_2 = new Resume(UUID_2, "B");
     private static final Resume R_3 = new Resume(UUID_3, "C");
     private static final Resume R_4 = new Resume(UUID_4, "D");
+    protected final Storage storage;
 
     public AbstractStorageTest(Storage storage) {
         this.storage = storage;
@@ -48,7 +45,7 @@ public abstract class AbstractStorageTest {
     public void update() throws Exception {
         Resume testResume = new Resume(UUID_3, "F");
         storage.update(testResume);
-        assertEquals(testResume, storage.get(UUID_3));
+        assertSame(testResume, storage.get(UUID_3));
     }
 
     @Test

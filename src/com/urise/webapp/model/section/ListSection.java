@@ -1,12 +1,15 @@
 package com.urise.webapp.model.section;
 
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 public class ListSection extends AbstractSection implements Serializable {
     private final List<String> descriptionList = new ArrayList<>();
 
-    public void addStrings(String... text){
+    public void addStrings(String... text) {
         Objects.requireNonNull(text, "text must not be null");
         descriptionList.addAll(Arrays.asList(text));
     }

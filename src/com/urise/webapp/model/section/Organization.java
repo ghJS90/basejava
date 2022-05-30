@@ -15,7 +15,7 @@ public class Organization implements Serializable {
         this.homePage = new Link(organizationName, url);
     }
 
-    public void addPosition(Position pos){
+    public void addPosition(Position pos) {
         positions.add(pos);
     }
 

@@ -1,6 +1,9 @@
 package com.urise.webapp;
 
-import com.urise.webapp.model.*;
+import com.urise.webapp.model.ContactType;
+import com.urise.webapp.model.Position;
+import com.urise.webapp.model.Resume;
+import com.urise.webapp.model.SectionType;
 import com.urise.webapp.model.section.ListSection;
 import com.urise.webapp.model.section.Organization;
 import com.urise.webapp.model.section.OrganizationSection;

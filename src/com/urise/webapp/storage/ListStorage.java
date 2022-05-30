@@ -2,7 +2,8 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.model.Resume;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ListStorage extends AbstractStorage<Integer> {
 
@@ -40,7 +41,7 @@ public class ListStorage extends AbstractStorage<Integer> {
 
     @Override
     public void doUpdate(Integer key, Resume r) {
-        storage.set( key, r);
+        storage.set(key, r);
     }
 
     @Override
