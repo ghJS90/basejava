@@ -12,6 +12,7 @@ import java.util.UUID;
  * Initial resume class
  */
 public class Resume implements Serializable, Comparable<Resume> {
+    private  static final long serialVersionUID = 1L;
 
     // Unique identifier
     private final String uuid;

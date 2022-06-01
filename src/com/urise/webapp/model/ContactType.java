@@ -1,8 +1,6 @@
 package com.urise.webapp.model;
 
-import java.io.Serializable;
-
-public enum ContactType implements Serializable {
+public enum ContactType {
     PHONE("Номер телефона"),
     SKYPE("Skype"),
     EMAIL("e-mail"),

@@ -34,6 +34,7 @@ public class MainFile {
         walk(path);
     }
 
+    private static int space = 0;
     public static void walk(String path) {
 
         File root = new File(path);
@@ -41,10 +42,19 @@ public class MainFile {
         if (list == null) return;
         for (File f : list) {
             if (f.isDirectory()) {
+                for (int i = 0; i < space; i++) {
+                    System.out.print(" ");
+                }
+                space++;
+                System.out.println("Directory: " + f.getAbsolutePath());
                 walk(f.getAbsolutePath());
             } else {
+                for (int i = -1; i <= space; i++) {
+                    System.out.print(" ");
+                }
                 System.out.println("File:" + f.getAbsoluteFile());
             }
         }
+        space--;
     }
 }

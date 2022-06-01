@@ -1,21 +1,20 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.ContactType;
-import com.urise.webapp.model.Position;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.model.SectionType;
 import com.urise.webapp.model.section.ListSection;
 import com.urise.webapp.model.section.Organization;
 import com.urise.webapp.model.section.OrganizationSection;
 import com.urise.webapp.model.section.StringSection;
-import com.urise.webapp.storage.FileStorage;
+import com.urise.webapp.storage.ObjectStreamStorage;
 import com.urise.webapp.storage.Storage;
 
 import java.io.File;
 import java.time.LocalDate;
 
 public class ResumeTestData {
-    private final static Storage ARRAY_STORAGE = new FileStorage(new File("C:/testFileStorage"));
+    private final static Storage ARRAY_STORAGE = new ObjectStreamStorage(new File("C:/testFileStorage"));
 
     public static void main(String[] args) {
 
@@ -50,15 +49,15 @@ public class ResumeTestData {
         StringSection objective = new StringSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
 
         Organization org1 = new Organization("Java Online Projects", "http://javaops.ru/");
-        org1.addPosition(new Position(LocalDate.of(2013, 10, 1), null, "Автор Проекта", "Создание, организация и проведение Java онлайн проектов и стажировок."));
+        org1.addPosition(new Organization.Position(LocalDate.of(2013, 10, 1), null, "Автор Проекта", "Создание, организация и проведение Java онлайн проектов и стажировок."));
         Organization org2 = new Organization("Wrike", "https://www.wrike.com/");
-        org2.addPosition(new Position(LocalDate.of(2014, 10, 1), LocalDate.of(2016, 1, 1), "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."));
+        org2.addPosition(new Organization.Position(LocalDate.of(2014, 10, 1), LocalDate.of(2016, 1, 1), "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."));
 
         Organization org3 = new Organization("Coursera", "https://www.coursera.org/course/progfun");
-        org3.addPosition(new Position(LocalDate.of(2013, 3, 1), LocalDate.of(2013, 5, 1), null, "'Functional Programming Principles in Scala' by Martin Odersky"));
+        org3.addPosition(new Organization.Position(LocalDate.of(2013, 3, 1), LocalDate.of(2013, 5, 1), null, "'Functional Programming Principles in Scala' by Martin Odersky"));
         Organization org4 = new Organization("Санкт-Петербургский национальный исследовательский университет информационных технологий, механики и оптики", "http://www.ifmo.ru/");
-        org4.addPosition(new Position(LocalDate.of(1993, 9, 1), LocalDate.of(1996, 7, 1), null, "Аспирантура (программист С, С++)"));
-        org4.addPosition(new Position(LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1), null, "Инженер (программист Fortran, C)"));
+        org4.addPosition(new Organization.Position(LocalDate.of(1993, 9, 1), LocalDate.of(1996, 7, 1), null, "Аспирантура (программист С, С++)"));
+        org4.addPosition(new Organization.Position(LocalDate.of(1987, 9, 1), LocalDate.of(1993, 7, 1), null, "Инженер (программист Fortran, C)"));
 
         experience.addOrganization(org1, org2);
         education.addOrganization(org3, org4);
