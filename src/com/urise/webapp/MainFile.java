@@ -46,13 +46,13 @@ public class MainFile {
                     System.out.print(" ");
                 }
                 space++;
-                System.out.println("Directory: " + f.getAbsolutePath());
+                System.out.println("Directory: [" + f.getName() + "]");
                 walk(f.getAbsolutePath());
             } else {
                 for (int i = -1; i <= space; i++) {
                     System.out.print(" ");
                 }
-                System.out.println("File:" + f.getAbsoluteFile());
+                System.out.println("File: " + f.getName());
             }
         }
         space--;

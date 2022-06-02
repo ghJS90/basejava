@@ -7,14 +7,14 @@ import com.urise.webapp.model.section.ListSection;
 import com.urise.webapp.model.section.Organization;
 import com.urise.webapp.model.section.OrganizationSection;
 import com.urise.webapp.model.section.StringSection;
-import com.urise.webapp.storage.ObjectStreamStorage;
+import com.urise.webapp.storage.PathStorage;
 import com.urise.webapp.storage.Storage;
 
-import java.io.File;
 import java.time.LocalDate;
 
 public class ResumeTestData {
-    private final static Storage ARRAY_STORAGE = new ObjectStreamStorage(new File("C:/testFileStorage"));
+
+    private final static Storage ARRAY_STORAGE = new PathStorage("C:/testFileStorage");
 
     public static void main(String[] args) {
 

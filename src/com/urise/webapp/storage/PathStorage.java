@@ -2,6 +2,7 @@ package com.urise.webapp.storage;
 
 import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
+import com.urise.webapp.storage.SerializeStrategy.SerializeStrategy;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -10,13 +11,13 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
-public abstract class AbstractPathStorage extends AbstractStorage<Path> {
+public class PathStorage extends AbstractStorage<Path> {
     private Path directory;
+    SerializeStrategy strategy;
 
-    protected AbstractPathStorage(String dir) {
+    public PathStorage(String dir) {
         Objects.requireNonNull(dir, "directory must not be null");
         directory = Paths.get(dir);
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
@@ -28,10 +29,10 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected List<Resume> getList() {
         List<Resume> result = new ArrayList<>();
-        try (Stream<Path> streamPath = Files.list(directory)){
+        try (Stream<Path> streamPath = Files.list(directory)) {
             streamPath.forEach(path -> result.add(doGet(path)));
         } catch (IOException e) {
-            throw new StorageException("IO error", directory.toString(), e);
+            throw new StorageException("IO error", null, e);
         }
         return result;
     }
@@ -44,7 +45,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected Resume doGet(Path path) {
         try {
-            return doRead(new BufferedInputStream(new FileInputStream(path.toFile())));
+            return strategy.doRead(new BufferedInputStream(new FileInputStream(path.toFile())));
         } catch (IOException e) {
             throw new StorageException("IO error", path.toFile().getName(), e);
         }
@@ -53,7 +54,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected void doSave(Path path, Resume r) {
         try {
-            Files.createFile(path);
+            Files.createFile(Objects.requireNonNull(path));
         } catch (IOException e) {
             throw new StorageException("Couldn't create Path " + path.toFile().getName(), path.toFile().getName(), e);
         }
@@ -72,7 +73,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     protected void doUpdate(Path path, Resume r) {
         try {
-            doWrite(r, new BufferedOutputStream(new FileOutputStream(path.toFile())));
+            strategy.doWrite(r, new BufferedOutputStream(new FileOutputStream(path.toFile())));
         } catch (IOException e) {
             throw new StorageException("IO error", path.toFile().getName(), e);
         }
@@ -86,12 +87,7 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
     @Override
     public void clear() {
         try {
-            Files.list(directory).forEach(new Consumer<Path>() {
-                @Override
-                public void accept(Path path) {
-                    AbstractPathStorage.this.doDelete(path);
-                }
-            });
+            Files.list(directory).forEach(PathStorage.this::doDelete);
         } catch (IOException e) {
             throw new StorageException("Path delete error ", null);
         }
@@ -106,7 +102,17 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
         return list.length;
     }
 
-    protected abstract void doWrite(Resume r, OutputStream os) throws IOException;
-
-    protected abstract Resume doRead(InputStream is) throws IOException;
+//    protected void doWrite(Resume r, OutputStream os) throws IOException{
+//        try (ObjectOutputStream oos = new ObjectOutputStream(os)) {
+//            oos.writeObject(r);
+//        }
+//    }
+//
+//    protected Resume doRead(InputStream is) throws IOException {
+//        try (ObjectInputStream ois = new ObjectInputStream(is)) {
+//            return (Resume) ois.readObject();
+//        } catch (ClassNotFoundException e) {
+//            throw new StorageException("Error read resume", null, e);
+//        }
+//    }
 }
