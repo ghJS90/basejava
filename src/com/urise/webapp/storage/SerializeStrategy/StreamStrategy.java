@@ -5,12 +5,12 @@ import com.urise.webapp.model.Resume;
 
 import java.io.*;
 
-public class ContextStrategy implements SerializeStrategy{
+public class StreamStrategy implements SerializeStrategy{
     SerializeStrategy serializeStrategy;
 
-    public ContextStrategy(SerializeStrategy serializeStrategy) {
-        this.serializeStrategy = serializeStrategy;
-    }
+//    public StreamStrategy(SerializeStrategy serializeStrategy) {
+//        this.serializeStrategy = serializeStrategy;
+//    }
 
     @Override
     public void doWrite(Resume r, OutputStream os) throws IOException {
