@@ -8,10 +8,6 @@ import java.io.*;
 public class StreamStrategy implements SerializeStrategy{
     SerializeStrategy serializeStrategy;
 
-//    public StreamStrategy(SerializeStrategy serializeStrategy) {
-//        this.serializeStrategy = serializeStrategy;
-//    }
-
     @Override
     public void doWrite(Resume r, OutputStream os) throws IOException {
         try (ObjectOutputStream oos = new ObjectOutputStream(os)) {
