@@ -14,8 +14,8 @@ import java.util.Objects;
 import java.util.stream.Stream;
 
 public class PathStorage extends AbstractStorage<Path> {
-    private Path directory;
-    protected StreamStrategy strategy = new StreamStrategy();
+    private final Path directory;
+    private final StreamStrategy strategy = new StreamStrategy();
 
     public PathStorage(String dir) {
         Objects.requireNonNull(dir, "directory must not be null");
@@ -23,7 +23,6 @@ public class PathStorage extends AbstractStorage<Path> {
         if (!Files.isDirectory(directory) || !Files.isWritable(directory)) {
             throw new IllegalArgumentException(dir + "is not directory/writeable");
         }
-        this.directory = Paths.get(dir);
     }
 
     protected Stream<Path> doReadAll() {

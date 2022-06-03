@@ -4,10 +4,8 @@ import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.io.*;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Stream;
 
 public class StreamStrategy implements SerializeStrategy {
     SerializeStrategy serializeStrategy;

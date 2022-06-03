@@ -5,14 +5,13 @@ import com.urise.webapp.model.Resume;
 import com.urise.webapp.storage.SerializeStrategy.StreamStrategy;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class FileStorage extends AbstractStorage<File> {
     private final File directory;
-    protected StreamStrategy strategy = new StreamStrategy();
+    private final StreamStrategy strategy = new StreamStrategy();
 
     protected FileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
@@ -72,9 +71,7 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     protected void doDelete(File file) {
-        if (file.delete()) {
-            System.out.println("File " + file + " deleted");
-        } else {
+        if (!file.delete()) {
             throw new StorageException("File delete error", file.getName());
         }
     }
