@@ -11,8 +11,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class FileStorage extends AbstractStorage<File> {
-    private File directory;
-    StreamStrategy strategy = new StreamStrategy();
+    private final File directory;
+    protected StreamStrategy strategy = new StreamStrategy();
 
     protected FileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
@@ -25,10 +25,18 @@ public class FileStorage extends AbstractStorage<File> {
         this.directory = directory;
     }
 
+    protected File[] doReadAll(){
+        File[] files = directory.listFiles();
+        if (files == null){
+            throw new StorageException("Directory error", null);
+        }
+        return files;
+    }
+
     @Override
     protected List<Resume> getList() {
         List<Resume> result = new ArrayList<>();
-        for (File f : Objects.requireNonNull(directory.listFiles())) {
+        for (File f : doReadAll()){
             try {
                 result.add(strategy.doRead(new BufferedInputStream(new FileInputStream(f))));
             } catch (IOException e) {
@@ -87,17 +95,35 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     public void clear() {
-        for (File f : Objects.requireNonNull(directory.listFiles())) {
+        for(File f : doReadAll()){
             doDelete(f);
         }
     }
 
     @Override
     public int size() {
-        String[] list = directory.list();
-        if (list == null){
-            throw new StorageException("Directory read error ", null);
-        }
-        return list.length;
+        return doReadAll().length;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
