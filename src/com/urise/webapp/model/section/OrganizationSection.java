@@ -9,7 +9,18 @@ import java.util.Objects;
 public class OrganizationSection extends AbstractSection implements Serializable {
     private  static final long serialVersionUID = 1L;
 
-    private final List<Organization> organizations = new ArrayList<>();
+    private List<Organization> organizations = new ArrayList<>();
+
+    public OrganizationSection() {}
+
+    public OrganizationSection(Organization... organizations) {
+        this(Arrays.asList(organizations));
+    }
+
+    public OrganizationSection(List<Organization> organizations) {
+        Objects.requireNonNull(organizations, "organizations must not be null");
+        this.organizations = organizations;
+    }
 
     public void addOrganization(Organization... organization) {
         organizations.addAll(Arrays.asList(organization));

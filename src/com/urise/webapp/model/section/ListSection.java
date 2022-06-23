@@ -7,9 +7,21 @@ import java.util.List;
 import java.util.Objects;
 
 public class ListSection extends AbstractSection implements Serializable {
-    private  static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-    private final List<String> descriptionList = new ArrayList<>();
+    private List<String> descriptionList = new ArrayList<>();
+
+    public ListSection() {
+    }
+
+    public ListSection(String... descriptionList) {
+        this(Arrays.asList(descriptionList));
+    }
+
+    public ListSection(List<String> descriptionList) {
+        Objects.requireNonNull(descriptionList, "items must not be null");
+        this.descriptionList = descriptionList;
+    }
 
     public void addStrings(String... text) {
         Objects.requireNonNull(text, "text must not be null");

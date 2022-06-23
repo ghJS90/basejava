@@ -1,18 +1,38 @@
 package com.urise.webapp.model.section;
 
 import com.urise.webapp.model.Link;
+import com.urise.webapp.util.LocalDateAdapter;
 
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class Organization implements Serializable {
-    private  static final long serialVersionUID = 1L;
+import static com.urise.webapp.util.DateUtil.NOW;
+import static com.urise.webapp.util.DateUtil.of;
 
-    private final Link homePage;
-    private final List<Position> positions = new ArrayList<>();
+public class Organization implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    private Link homePage;
+
+    private List<Position> positions = new ArrayList<>();
+
+    public Organization() {
+    }
+
+    public Organization(String name, String url, Position... positions) {
+        this(new Link(name, url), Arrays.asList(positions));
+    }
+
+    public Organization(Link homePage, List<Position> positions) {
+        this.homePage = homePage;
+        this.positions = positions;
+    }
 
     public Organization(String organizationName, String url) {
         this.homePage = new Link(organizationName, url);
@@ -39,17 +59,32 @@ public class Organization implements Serializable {
     }
 
     public static class Position implements Serializable {
-        private final LocalDate dateFrom;
-        private final LocalDate dateTo;
-        private final String position;
-        private final String description;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate dateFrom;
+        @XmlJavaTypeAdapter(LocalDateAdapter.class)
+        private LocalDate dateTo;
+        private String title;
+        private String position;
 
-        public Position(LocalDate dateFrom, LocalDate dateTo, String position, String description) {
-            Objects.requireNonNull(dateFrom, "dateFrom must not be null");
+        public Position() {
+        }
+
+        public Position(int startYear, Month startMonth, String title, String description) {
+            this(of(startYear, startMonth), NOW, title, description);
+        }
+
+        public Position(int startYear, Month startMonth, int endYear, Month endMonth, String title, String position) {
+            this(of(startYear, startMonth), of(endYear, endMonth), title, position);
+        }
+
+        public Position(LocalDate dateFrom, LocalDate dateTo, String title, String position) {
+            Objects.requireNonNull(dateFrom, "startDate must not be null");
+            Objects.requireNonNull(dateTo, "endDate must not be null");
+            Objects.requireNonNull(title, "title must not be null");
             this.dateFrom = dateFrom;
             this.dateTo = dateTo;
+            this.title = title;
             this.position = position;
-            this.description = description;
         }
 
         public LocalDate getDateFrom() {
@@ -61,7 +96,7 @@ public class Organization implements Serializable {
         }
 
         public String getDescription() {
-            return description;
+            return position;
         }
 
         public String getPosition() {
@@ -73,7 +108,7 @@ public class Organization implements Serializable {
             return "\ndateFrom: " + dateFrom +
                     "\ndateTo: " + (dateTo == null ? "Текущее время" : dateTo) +
                     "\nДолжность: " + position +
-                    "\nОписание деятельности: " + description +
+                    "\nОписание деятельности: " + position +
                     "\n*\n";
         }
 
@@ -87,7 +122,7 @@ public class Organization implements Serializable {
             if (!dateFrom.equals(position1.dateFrom)) return false;
             if (!Objects.equals(dateTo, position1.dateTo)) return false;
             if (!Objects.equals(position, position1.position)) return false;
-            return description.equals(position1.description);
+            return position.equals(position1.position);
         }
 
         @Override
@@ -95,7 +130,7 @@ public class Organization implements Serializable {
             int result = dateFrom.hashCode();
             result = 31 * result + (dateTo != null ? dateTo.hashCode() : 0);
             result = 31 * result + (position != null ? position.hashCode() : 0);
-            result = 31 * result + description.hashCode();
+            result = 31 * result + position.hashCode();
             return result;
         }
     }

@@ -4,10 +4,8 @@ import com.urise.webapp.exception.StorageException;
 import com.urise.webapp.model.Resume;
 
 import java.io.*;
-import java.util.List;
-import java.util.Objects;
 
-public class StreamStrategy implements SerializeStrategy {
+public class ObjectStreamSerializer implements SerializeStrategy {
     SerializeStrategy serializeStrategy;
 
     @Override
@@ -24,10 +22,5 @@ public class StreamStrategy implements SerializeStrategy {
         } catch (ClassNotFoundException e) {
             throw new StorageException("Error read resume", null, e);
         }
-    }
-
-    @Override
-    public List<Objects> doReadAll() {
-        return null;
     }
 }
