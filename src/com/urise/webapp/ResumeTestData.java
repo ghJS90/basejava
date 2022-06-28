@@ -50,7 +50,7 @@ public class ResumeTestData {
         StringSection objective = new StringSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям");
 
         Organization org1 = new Organization("Java Online Projects", "http://javaops.ru/");
-        org1.addPosition(new Organization.Position(LocalDate.of(2013, 10, 1), null, "Автор Проекта", "Создание, организация и проведение Java онлайн проектов и стажировок."));
+        org1.addPosition(new Organization.Position(LocalDate.of(2013, 10, 1), LocalDate.now(), "Автор Проекта", "Создание, организация и проведение Java онлайн проектов и стажировок."));
         Organization org2 = new Organization("Wrike", "https://www.wrike.com/");
         org2.addPosition(new Organization.Position(LocalDate.of(2014, 10, 1), LocalDate.of(2016, 1, 1), "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO."));
 

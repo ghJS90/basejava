@@ -10,15 +10,15 @@ public class JsonStreamSerializer implements SerializeStrategy {
 
     @Override
     public void doWrite(Resume r, OutputStream os) throws IOException {
-        try (Writer w = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
-            JsonParser.write(r, w);
+        try (Writer writer = new OutputStreamWriter(os, StandardCharsets.UTF_8)) {
+            JsonParser.write(r, writer);
         }
     }
 
     @Override
     public Resume doRead(InputStream is) throws IOException {
-        try (Reader r = new InputStreamReader(is, StandardCharsets.UTF_8)) {
-            return JsonParser.read(r, Resume.class);
+        try (Reader reader = new InputStreamReader(is, StandardCharsets.UTF_8)) {
+            return JsonParser.read(reader, Resume.class);
         }
     }
 }
