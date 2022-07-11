@@ -9,13 +9,14 @@ import com.urise.webapp.model.section.OrganizationSection;
 import com.urise.webapp.model.section.StringSection;
 import com.urise.webapp.storage.PathStorage;
 import com.urise.webapp.storage.SerializeStrategy.ObjectStreamSerializer;
+import com.urise.webapp.storage.SerializeStrategy.XmlStreamSerializer;
 import com.urise.webapp.storage.Storage;
 
 import java.time.LocalDate;
 
 public class ResumeTestData {
 
-    private final static Storage ARRAY_STORAGE = new PathStorage("C:/testFileStorage", new ObjectStreamSerializer());
+    private final static Storage ARRAY_STORAGE = new PathStorage("C:/testFileStorage", new XmlStreamSerializer());
 
     public static void main(String[] args) {
 

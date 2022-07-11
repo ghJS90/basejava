@@ -6,7 +6,6 @@ import com.urise.webapp.model.Resume;
 import java.io.*;
 
 public class ObjectStreamSerializer implements SerializeStrategy {
-    SerializeStrategy serializeStrategy;
 
     @Override
     public void doWrite(Resume r, OutputStream os) throws IOException {

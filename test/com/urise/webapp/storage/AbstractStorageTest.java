@@ -125,7 +125,7 @@ public abstract class AbstractStorageTest {
 
     @Test
     public void get() throws Exception {
-       assertEquals(R_1, storage.get(UUID_1));
+       assertEquals(R_3, storage.get(UUID_3));
     }
 
     @Test(expected = ExistStorageException.class)
