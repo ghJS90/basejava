@@ -3,6 +3,8 @@ package com.urise.webapp.model.section;
 import com.urise.webapp.model.Link;
 import com.urise.webapp.util.LocalDateAdapter;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -15,6 +17,7 @@ import java.util.Objects;
 import static com.urise.webapp.util.DateUtil.NOW;
 import static com.urise.webapp.util.DateUtil.of;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -58,13 +61,27 @@ public class Organization implements Serializable {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Organization that = (Organization) o;
+        return Objects.equals(homePage, that.homePage) &&
+                Objects.equals(positions, that.positions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(homePage, positions);
+    }
+
     public static class Position implements Serializable {
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate dateFrom;
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate dateTo;
         private String title;
-        private String position;
+        private String description;
 
         public Position() {
         }
@@ -77,14 +94,14 @@ public class Organization implements Serializable {
             this(of(startYear, startMonth), of(endYear, endMonth), title, position);
         }
 
-        public Position(LocalDate dateFrom, LocalDate dateTo, String title, String position) {
+        public Position(LocalDate dateFrom, LocalDate dateTo, String title, String description) {
             Objects.requireNonNull(dateFrom, "startDate must not be null");
             Objects.requireNonNull(dateTo, "endDate must not be null");
 //            Objects.requireNonNull(title, "title must not be null");
             this.dateFrom = dateFrom;
             this.dateTo = dateTo;
             this.title = title;
-            this.position = position;
+            this.description = description;
         }
 
         public LocalDate getDateFrom() {
@@ -95,20 +112,12 @@ public class Organization implements Serializable {
             return dateTo;
         }
 
-        public String getDescription() {
-            return position;
-        }
-
-        public String getPosition() {
-            return position;
-        }
-
         @Override
         public String toString() {
             return "\ndateFrom: " + dateFrom +
                     "\ndateTo: " + (dateTo == null ? "Текущее время" : dateTo) +
-                    "\nДолжность: " + position +
-                    "\nОписание деятельности: " + position +
+                    "\nДолжность: " + description +
+                    "\nОписание деятельности: " + description +
                     "\n*\n";
         }
 
@@ -116,22 +125,16 @@ public class Organization implements Serializable {
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
-
-            Position position1 = (Position) o;
-
-            if (!dateFrom.equals(position1.dateFrom)) return false;
-            if (!Objects.equals(dateTo, position1.dateTo)) return false;
-            if (!Objects.equals(position, position1.position)) return false;
-            return position.equals(position1.position);
+            Position position = (Position) o;
+            return Objects.equals(dateFrom, position.dateFrom) &&
+                    Objects.equals(dateTo, position.dateTo) &&
+                    Objects.equals(title, position.title) &&
+                    Objects.equals(description, position.description);
         }
 
         @Override
         public int hashCode() {
-            int result = dateFrom.hashCode();
-            result = 31 * result + (dateTo != null ? dateTo.hashCode() : 0);
-            result = 31 * result + (position != null ? position.hashCode() : 0);
-            result = 31 * result + position.hashCode();
-            return result;
+            return Objects.hash(dateFrom, dateTo, title, description);
         }
     }
 }

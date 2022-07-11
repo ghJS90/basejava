@@ -34,13 +34,15 @@ public class OrganizationSection extends AbstractSection implements Serializable
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         OrganizationSection that = (OrganizationSection) o;
-        return Objects.equals(organizations, that.organizations);
+
+        return organizations.equals(that.organizations);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(organizations);
+        return organizations.hashCode();
     }
 
     @Override
