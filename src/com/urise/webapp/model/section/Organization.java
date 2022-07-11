@@ -75,6 +75,7 @@ public class Organization implements Serializable {
         return Objects.hash(homePage, positions);
     }
 
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
         private LocalDate dateFrom;

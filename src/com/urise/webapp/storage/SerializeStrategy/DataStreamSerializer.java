@@ -23,14 +23,15 @@ public class DataStreamSerializer implements SerializeStrategy {
                 dos.writeUTF(entry.getKey().name());
                 dos.writeUTF(entry.getValue());
             }
-            for (Map.Entry<SectionType, AbstractSection> entry : r.getSections().entrySet()){
-             if (entry.getValue() instanceof StringSection){
-                 dos.writeUTF(entry.getKey().name());
-                 dos.writeUTF(((StringSection) entry.getValue()).getDescription());
-             }
-             if (entry.getValue() instanceof ListSection){
+            for (Map.Entry<SectionType, AbstractSection> entry : r.getSections().entrySet()) {
+                if (entry.getValue() instanceof StringSection) {
+                    dos.writeUTF(entry.getKey().name());
+                    dos.writeUTF(((StringSection) entry.getValue()).getDescription());
+                }
+                if (entry.getValue() instanceof ListSection) {
 //                 dos.writeUTF();
-             }
+//                }
+                }
             }
         }
     }
