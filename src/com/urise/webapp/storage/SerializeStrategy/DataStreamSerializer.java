@@ -6,8 +6,7 @@ import com.urise.webapp.model.SectionType;
 import com.urise.webapp.model.section.*;
 
 import java.io.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.Month;
 import java.util.List;
 import java.util.Map;
 
@@ -29,55 +28,38 @@ public class DataStreamSerializer implements SerializeStrategy {
             dos.writeInt(sections.size());
             for (Map.Entry<SectionType, AbstractSection> entry : sections.entrySet()) {
                 SectionType st = entry.getKey();
+                dos.writeUTF(entry.getKey().name());
+
                 switch (st) {
                     case OBJECTIVE:
                     case PERSONAL:
-                        dos.writeUTF(entry.getKey().name());
-                        dos.writeUTF((entry.getValue()).toString());
+                        dos.writeUTF(((StringSection) entry.getValue()).getDescription());
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
                         List<String> listSection = ((ListSection) entry.getValue()).getDescriptionList();
-                        int listSize = listSection.size();
-                        dos.writeUTF(entry.getKey().name());
-                        dos.writeInt(listSize);
-                        for (int i = 0; i < listSize; i++) {
-                            dos.writeUTF(((ListSection) entry.getValue()).getDescriptionList().get(i));
+                        dos.writeInt(listSection.size());
+                        for (String description : listSection) {
+                            dos.writeUTF(description);
                         }
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        dos.writeUTF(entry.getKey().name());
                         List<Organization> orgList = ((OrganizationSection) entry.getValue()).getOrganizations();
                         dos.writeInt(orgList.size());
                         for (Organization organization : orgList) {
                             dos.writeUTF(organization.getHomePage().getName());
-                            if (organization.getHomePage().getUrl() == null) {
-                                dos.writeUTF("");
-                            } else {
-                                dos.writeUTF(organization.getHomePage().getUrl());
-                            }
+                            dos.writeUTF(organization.getHomePage().getUrl() == null ? "" : organization.getHomePage().getUrl());
+
                             List<Organization.Position> positions = organization.getPositions();
                             dos.writeInt(positions.size());
-                            if (organization.getPositions().size() != 0) {
-                                for (Organization.Position position : positions) {
-                                    dos.writeUTF(position.getDateFrom().format(DateTimeFormatter.ISO_LOCAL_DATE));
-                                    dos.writeUTF(position.getDateTo().format(DateTimeFormatter.ISO_LOCAL_DATE));
-                                    String title = position.getTitle();
-                                    String posDescription = position.getDescription();
-                                    if (title == null) {
-                                        dos.writeUTF("");
-                                    } else {
-                                        dos.writeUTF(title);
-                                    }
-                                    if (posDescription == null) {
-                                        dos.writeUTF("");
-                                    } else {
-                                        dos.writeUTF(posDescription);
-                                    }
-                                }
-                            } else {
-                                dos.writeUTF("");
+                            for (Organization.Position position : positions) {
+                                dos.writeInt(position.getDateFrom().getYear());
+                                dos.writeInt(position.getDateFrom().getMonthValue());
+                                dos.writeInt(position.getDateTo().getYear());
+                                dos.writeInt(position.getDateTo().getMonthValue());
+                                dos.writeUTF(position.getTitle());
+                                dos.writeUTF(position.getDescription() == null ? "" : position.getDescription());
                             }
                         }
                         break;
@@ -102,82 +84,46 @@ public class DataStreamSerializer implements SerializeStrategy {
                 SectionType st = SectionType.valueOf(disAtNow);
                 switch (st) {
                     case OBJECTIVE:
-                        StringSection testSection = new StringSection(dis.readUTF());
-                        resume.getSections().put(SectionType.OBJECTIVE, testSection);
-                        break;
                     case PERSONAL:
-                        StringSection testSection2 = new StringSection(dis.readUTF());
-                        resume.getSections().put(SectionType.PERSONAL, testSection2);
+                        StringSection testSection = new StringSection(dis.readUTF());
+                        resume.getSections().put(st, testSection);
                         break;
                     case ACHIEVEMENT:
-                        int achListSize = dis.readInt();
+                    case QUALIFICATIONS:
+                        int listSize = dis.readInt();
                         ListSection testSection3 = new ListSection();
-                        for (int j = 0; j < achListSize; j++) {
+                        for (int j = 0; j < listSize; j++) {
                             testSection3.addStrings(dis.readUTF());
                         }
-                        resume.getSections().put(SectionType.ACHIEVEMENT, testSection3);
-                        break;
-                    case QUALIFICATIONS:
-                        int qualListSize = dis.readInt();
-                        ListSection testSection4 = new ListSection();
-                        for (int j = 0; j < qualListSize; j++) {
-                            testSection4.addStrings(dis.readUTF());
-                        }
-                        resume.getSections().put(SectionType.QUALIFICATIONS, testSection4);
+                        resume.getSections().put(st, testSection3);
                         break;
                     case EXPERIENCE:
-                        int orgExpList = dis.readInt();
-                        OrganizationSection orgExpSection = new OrganizationSection();
-                        for (int j = 0; j < orgExpList; j++) {
-                            Organization organization = new Organization(dis.readUTF(), dis.readUTF());
-                            int orgCount = dis.readInt();
-                            for (int k = 0; k < orgCount; k++) {
-                                organization.addPosition(new Organization.Position(
-                                        LocalDate.parse(dis.readUTF(), DateTimeFormatter.ISO_LOCAL_DATE),
-                                        LocalDate.parse(dis.readUTF(), DateTimeFormatter.ISO_LOCAL_DATE),
-                                        dis.readUTF(),
-                                        dis.readUTF()
-                                ));
-                                orgExpSection.addOrganization(organization);
-                            }
-                        }
-                        resume.getSections().put(SectionType.EXPERIENCE, orgExpSection);
-                        break;
                     case EDUCATION:
                         int orgList = dis.readInt();
-                        OrganizationSection orgEducationSection = new OrganizationSection();
+                        OrganizationSection orgExpSection = new OrganizationSection();
                         for (int j = 0; j < orgList; j++) {
-                            String orgName = dis.readUTF();
-                            String orgUrl;
-                            if (dis.readUTF().equals("")) {
-                                orgUrl = null;
-                            } else {
-                                orgUrl = dis.readUTF();
-                            }
-                            Organization organization = new Organization(orgName, orgUrl);
+                            String homepage = dis.readUTF();
+                            String url = dis.readUTF();
+                            Organization organization = new Organization(homepage, url.equals("") ? null : url);
                             int orgCount = dis.readInt();
-                            if (!(orgCount == 0)) {
-                                for (int k = 0; k < orgCount; k++) {
-                                    LocalDate dateFrom = LocalDate.parse(dis.readUTF(), DateTimeFormatter.ISO_LOCAL_DATE);
-                                    LocalDate dateTo = LocalDate.parse(dis.readUTF(), DateTimeFormatter.ISO_LOCAL_DATE);
-                                    String title;
-                                    String position;
-                                    if (!dis.readUTF().equals("")) {
-                                        title = dis.readUTF();
-                                    } else {
-                                        title = null;
-                                    }
-                                    if (!dis.readUTF().equals("")) {
-                                        position = dis.readUTF();
-                                    } else {
-                                        position = null;
-                                    }
-                                    organization.addPosition(new Organization.Position(dateFrom, dateTo, title, position));
-                                }
-                                orgEducationSection.addOrganization(organization);
+                            for (int k = 0; k < orgCount; k++) {
+                                int startYear = dis.readInt();
+                                Month startMonth = Month.of(dis.readInt());
+                                int endYear = dis.readInt();
+                                Month endMonth = Month.of(dis.readInt());
+                                String title = dis.readUTF();
+                                String position = dis.readUTF(); //.equals("HERE") ? null : dis.readUTF();
+                                position = (position.equals("") ? null : position);
+                                organization.addPosition(new Organization.Position(
+                                        startYear, startMonth,
+                                        endYear, endMonth,
+                                        title, position
+                                ));
                             }
+                            orgExpSection.addOrganization(organization);
+
                         }
-                        resume.getSections().put(SectionType.EDUCATION, orgEducationSection);
+                        resume.getSections().put(st, orgExpSection);
                         break;
                 }
             }
