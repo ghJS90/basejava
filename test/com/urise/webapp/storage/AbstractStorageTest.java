@@ -59,10 +59,10 @@ public abstract class AbstractStorageTest {
                         new Organization("Organization12", "http://Organization12.ru")));
         R_2.addContact(ContactType.SKYPE, "skype2");
         R_2.addContact(ContactType.PHONE, "22222");
-        R_1.addSection(SectionType.EXPERIENCE,
-                new OrganizationSection(
-                        new Organization("Organization2", "http://Organization2.ru",
-                                new Organization.Position(2015, Month.JANUARY, "position1", "content1"))));
+//        R_1.addSection(SectionType.EXPERIENCE,
+//                new OrganizationSection(
+//                        new Organization("Organization2", "http://Organization2.ru",
+//                                new Organization.Position(2015, Month.JANUARY, "position1", "content1"))));
     }
 
     public AbstractStorageTest(Storage storage) {

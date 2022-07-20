@@ -105,6 +105,14 @@ public class Organization implements Serializable {
             this.description = description;
         }
 
+        public String getTitle() {
+            return title;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
         public LocalDate getDateFrom() {
             return dateFrom;
         }
@@ -117,7 +125,7 @@ public class Organization implements Serializable {
         public String toString() {
             return "\ndateFrom: " + dateFrom +
                     "\ndateTo: " + (dateTo == null ? "Текущее время" : dateTo) +
-                    "\nДолжность: " + description +
+                    "\nДолжность: " + title +
                     "\nОписание деятельности: " + description +
                     "\n*\n";
         }

@@ -8,6 +8,7 @@ import com.urise.webapp.model.section.Organization;
 import com.urise.webapp.model.section.OrganizationSection;
 import com.urise.webapp.model.section.StringSection;
 import com.urise.webapp.storage.PathStorage;
+import com.urise.webapp.storage.SerializeStrategy.DataStreamSerializer;
 import com.urise.webapp.storage.SerializeStrategy.ObjectStreamSerializer;
 import com.urise.webapp.storage.SerializeStrategy.XmlStreamSerializer;
 import com.urise.webapp.storage.Storage;
@@ -16,7 +17,7 @@ import java.time.LocalDate;
 
 public class ResumeTestData {
 
-    private final static Storage ARRAY_STORAGE = new PathStorage("C:/testFileStorage", new XmlStreamSerializer());
+    private final static Storage ARRAY_STORAGE = new PathStorage("C:/testFileStorage", new DataStreamSerializer());
 
     public static void main(String[] args) {
 
@@ -79,7 +80,7 @@ public class ResumeTestData {
         testResume.getSections().put(SectionType.EXPERIENCE, experience);
         testResume.getSections().put(SectionType.EDUCATION, education);
 
-//        getResumeInfo(testResume);
+        getResumeInfo(testResume);
 
         Resume resumeForUpdate = new Resume(uuid, "Новый Сотрудник");
 
@@ -88,8 +89,8 @@ public class ResumeTestData {
         ARRAY_STORAGE.save(testResume);
         ARRAY_STORAGE.size();
         getResumeInfo(ARRAY_STORAGE.get(uuid));
-        ARRAY_STORAGE.update(resumeForUpdate);
-        getResumeInfo(ARRAY_STORAGE.get(uuid));
+//        ARRAY_STORAGE.update(resumeForUpdate);
+//        getResumeInfo(ARRAY_STORAGE.get(uuid));
 //        ARRAY_STORAGE.delete(uuid);
 //        ARRAY_STORAGE.clear();
 //        ARRAY_STORAGE.delete("test");
