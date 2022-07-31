@@ -8,7 +8,6 @@ import com.urise.webapp.model.section.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Objects;
@@ -54,59 +53,9 @@ public class DataStreamSerializer implements SerializeStrategy {
                                 dos.writeUTF(position.getDescription() == null ? "" : position.getDescription());
                             });
                         });
-//                        List<Organization> orgList = ((OrganizationSection) entry.getValue()).getOrganizations();
-//                        dos.writeInt(orgList.size());
-//                        for (Organization organization : orgList) {
-//                            dos.writeUTF(organization.getHomePage().getName());
-//                            dos.writeUTF(organization.getHomePage().getUrl() == null ? "" : organization.getHomePage().getUrl());
-//
-//
-//                            List<Organization.Position> positions = organization.getPositions();
-//                            dos.writeInt(positions.size());
-//                            for (Organization.Position position : positions) {
-//                                writeDate(position, dos);
-//                                dos.writeUTF(position.getTitle());
-//                                dos.writeUTF(position.getDescription() == null ? "" : position.getDescription());
-//                            }
-//                        }
                         break;
                 }
             });
-//            Map<SectionType, AbstractSection> sections = r.getSections();
-//            dos.writeInt(sections.size());
-//            for (Map.Entry<SectionType, AbstractSection> entry : sections.entrySet()) {
-//                SectionType st = entry.getKey();
-//                dos.writeUTF(entry.getKey().name());
-//
-//                switch (st) {
-//                    case OBJECTIVE:
-//                    case PERSONAL:
-//                        dos.writeUTF(((StringSection) entry.getValue()).getDescription());
-//                        break;
-//                    case ACHIEVEMENT:
-//                    case QUALIFICATIONS:
-//                        List<String> listSection = ((ListSection) entry.getValue()).getDescriptionList();
-//                        writeWithException(listSection, dos, dos::writeUTF);
-//                        break;
-//                    case EXPERIENCE:
-//                    case EDUCATION:
-//                        List<Organization> orgList = ((OrganizationSection) entry.getValue()).getOrganizations();
-//                        dos.writeInt(orgList.size());
-//                        for (Organization organization : orgList) {
-//                            dos.writeUTF(organization.getHomePage().getName());
-//                            dos.writeUTF(organization.getHomePage().getUrl() == null ? "" : organization.getHomePage().getUrl());
-//
-//                            List<Organization.Position> positions = organization.getPositions();
-//                            dos.writeInt(positions.size());
-//                            for (Organization.Position position : positions) {
-//                                writeDate(position, dos);
-//                                dos.writeUTF(position.getTitle());
-//                                dos.writeUTF(position.getDescription() == null ? "" : position.getDescription());
-//                            }
-//                        }
-//                        break;
-//                }
-//            }
         }
     }
 
@@ -117,10 +66,6 @@ public class DataStreamSerializer implements SerializeStrategy {
             String fullName = dis.readUTF();
             Resume resume = new Resume(uuid, fullName);
             read(dis, () -> resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
-//            int contactSize = dis.readInt();
-//            for (int i = 0; i < contactSize; i++) {
-//                resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF());
-//            }
 
             read(dis, () -> {
                 SectionType st = SectionType.valueOf(dis.readUTF());
@@ -134,13 +79,6 @@ public class DataStreamSerializer implements SerializeStrategy {
                         ListSection ls = new ListSection();
                         read(dis, () -> ls.addStrings(dis.readUTF()));
                         resume.getSections().put(st, ls);
-
-//                        int listSize = dis.readInt();
-//                        ListSection testSection3 = new ListSection();
-//                        for (int j = 0; j < listSize; j++) {
-//                            testSection3.addStrings(dis.readUTF());
-//                        }
-//                        resume.getSections().put(st, testSection3);
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
