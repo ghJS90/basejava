@@ -103,81 +103,9 @@ public class DataStreamSerializer implements SerializeStrategy {
                         });
                         resume.getSections().put(st, orgExpSection);
 
-//
-//                        int orgList = dis.readInt();
-//                        OrganizationSection orgExpSection = new OrganizationSection();
-//                        for (int j = 0; j < orgList; j++) {
-//                            String homepage = dis.readUTF();
-//                            String url = dis.readUTF();
-//                            Organization organization = new Organization(homepage, url.equals("") ? null : url);
-//                            int orgCount = dis.readInt();
-//                            for (int k = 0; k < orgCount; k++) {
-//                                LocalDate startDate = readDate(dis.readInt(), dis.readInt());
-//                                LocalDate endDate = readDate(dis.readInt(), dis.readInt());
-//                                String title = dis.readUTF();
-//                                String position = dis.readUTF();
-//                                position = (position.equals("") ? null : position);
-//                                organization.addPosition(new Organization.Position(
-//                                        startDate, endDate,
-//                                        title, position
-//                                ));
-//                            }
-//                            orgExpSection.addOrganization(organization);
-//
-//                        }
-//                        resume.getSections().put(st, orgExpSection);
                         break;
                 }
-
             });
-
-
-//            int sectionsSize = dis.readInt();
-//            for (int i = 0; i < sectionsSize; i++) {
-//                String disAtNow = dis.readUTF();
-//                SectionType st = SectionType.valueOf(disAtNow);
-//                switch (st) {
-//                    case OBJECTIVE:
-//                    case PERSONAL:
-//                        StringSection testSection = new StringSection(dis.readUTF());
-//                        resume.getSections().put(st, testSection);
-//                        break;
-//                    case ACHIEVEMENT:
-//                    case QUALIFICATIONS:
-//                        int listSize = dis.readInt();
-//                        ListSection testSection3 = new ListSection();
-//                        for (int j = 0; j < listSize; j++) {
-//                            testSection3.addStrings(dis.readUTF());
-//                        }
-//                        resume.getSections().put(st, testSection3);
-//                        break;
-//                    case EXPERIENCE:
-//                    case EDUCATION:
-//                        int orgList = dis.readInt();
-//                        OrganizationSection orgExpSection = new OrganizationSection();
-//                        for (int j = 0; j < orgList; j++) {
-//                            String homepage = dis.readUTF();
-//                            String url = dis.readUTF();
-//                            Organization organization = new Organization(homepage, url.equals("") ? null : url);
-//                            int orgCount = dis.readInt();
-//                            for (int k = 0; k < orgCount; k++) {
-//                                LocalDate startDate = readDate(dis.readInt(), dis.readInt());
-//                                LocalDate endDate = readDate(dis.readInt(), dis.readInt());
-//                                String title = dis.readUTF();
-//                                String position = dis.readUTF();
-//                                position = (position.equals("") ? null : position);
-//                                organization.addPosition(new Organization.Position(
-//                                        startDate, endDate,
-//                                        title, position
-//                                ));
-//                            }
-//                            orgExpSection.addOrganization(organization);
-//
-//                        }
-//                        resume.getSections().put(st, orgExpSection);
-//                        break;
-//                }
-//            }
             System.out.println(resume.getContacts().values());
             System.out.println(resume.getSections().values());
 
@@ -211,15 +139,6 @@ public class DataStreamSerializer implements SerializeStrategy {
             testInterface.read();
         }
     }
-
-//    private ArrayList<T> readList(DataInputStream dis, MyReader testInterface) throws IOException {
-//        ArrayList<> list = new ArrayList();
-//        int collectionSize = dis.readInt();
-//        for (int i = 0; i < collectionSize; i++) {
-//            testInterface.read();
-//        }
-//        return list;
-//    }
 
     @FunctionalInterface
     private interface MyWriter<T> {
