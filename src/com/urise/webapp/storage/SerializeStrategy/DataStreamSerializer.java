@@ -48,7 +48,8 @@ public class DataStreamSerializer implements SerializeStrategy {
                             dos.writeUTF(organization.getHomePage().getName());
                             dos.writeUTF(organization.getHomePage().getUrl() == null ? "" : organization.getHomePage().getUrl());
                             writeWithException(organization.getPositions(), dos, position -> {
-                                writeDate(position, dos);
+                                writeDate(dos, position.getDateFrom());
+                                writeDate(dos, position.getDateTo());
                                 dos.writeUTF(position.getTitle());
                                 dos.writeUTF(position.getDescription() == null ? "" : position.getDescription());
                             });
@@ -117,11 +118,9 @@ public class DataStreamSerializer implements SerializeStrategy {
         return of(year, Month.of(month));
     }
 
-    private void writeDate(Organization.Position position, DataOutputStream dos) throws IOException {
-        dos.writeInt(position.getDateFrom().getYear());
-        dos.writeInt(position.getDateFrom().getMonthValue());
-        dos.writeInt(position.getDateTo().getYear());
-        dos.writeInt(position.getDateTo().getMonthValue());
+    private void writeDate(DataOutputStream dos, LocalDate localDate) throws IOException {
+        dos.writeInt(localDate.getYear());
+        dos.writeInt(localDate.getMonthValue());
     }
 
 
