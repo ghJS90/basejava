@@ -8,9 +8,7 @@ import com.urise.webapp.model.section.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static com.urise.webapp.util.DateUtil.of;
 
@@ -83,14 +81,13 @@ public class DataStreamSerializer implements SerializeStrategy {
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        OrganizationSection orgExpSection = new OrganizationSection();
-                        read(dis, () -> {
+                        OrganizationSection orgSection = new OrganizationSection(readList(dis, (MyListReader<Organization>) (list) -> {
                             String homepage = dis.readUTF();
                             String url = dis.readUTF();
                             Organization organization = new Organization(homepage, url.equals("") ? null : url);
-                            read(dis, () -> {
-                                LocalDate startDate = readDate(dis.readInt(), dis.readInt());
-                                LocalDate endDate = readDate(dis.readInt(), dis.readInt());
+                            DataStreamSerializer.this.read(dis, () -> {
+                                LocalDate startDate = DataStreamSerializer.this.readDate(dis.readInt(), dis.readInt());
+                                LocalDate endDate = DataStreamSerializer.this.readDate(dis.readInt(), dis.readInt());
                                 String title = dis.readUTF();
                                 String position = dis.readUTF();
                                 position = (position.equals("") ? null : position);
@@ -99,10 +96,31 @@ public class DataStreamSerializer implements SerializeStrategy {
                                         title, position
                                 ));
                             });
-                            orgExpSection.addOrganization(organization);
-
-                        });
-                        resume.getSections().put(st, orgExpSection);
+                            list.add(organization);
+//                            orgSection.addOrganization(organization);
+                        }));
+                        resume.getSections().put(st, orgSection);
+//
+//                        OrganizationSection orgSection = new OrganizationSection();
+//                        read(dis, () -> {
+//                            String homepage = dis.readUTF();
+//                            String url = dis.readUTF();
+//                            Organization organization = new Organization(homepage, url.equals("") ? null : url);
+//                            read(dis, () -> {
+//                                LocalDate startDate = readDate(dis.readInt(), dis.readInt());
+//                                LocalDate endDate = readDate(dis.readInt(), dis.readInt());
+//                                String title = dis.readUTF();
+//                                String position = dis.readUTF();
+//                                position = (position.equals("") ? null : position);
+//                                organization.addPosition(new Organization.Position(
+//                                        startDate, endDate,
+//                                        title, position
+//                                ));
+//                            });
+//                            orgSection.addOrganization(organization);
+//
+//                        });
+//                        resume.getSections().put(st, orgSection);
 
                         break;
                 }
@@ -139,6 +157,15 @@ public class DataStreamSerializer implements SerializeStrategy {
         }
     }
 
+    private <T> List<T> readList(DataInputStream dis, MyListReader<T> listReader) throws IOException {
+        int collectionSize = dis.readInt();
+        List<T> list = new ArrayList<>();
+        for (int i = 0; i < collectionSize; i++) {
+            listReader.read(list);
+        }
+        return list;
+    }
+
     @FunctionalInterface
     private interface MyWriter<T> {
         void write(T item) throws IOException;
@@ -147,6 +174,11 @@ public class DataStreamSerializer implements SerializeStrategy {
     @FunctionalInterface
     private interface MyReader {
         void read() throws IOException;
+    }
+
+    @FunctionalInterface
+    private interface MyListReader<T> {
+        void read(List<T> list) throws IOException;
     }
 }
 
