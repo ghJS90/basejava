@@ -81,7 +81,7 @@ public class DataStreamSerializer implements SerializeStrategy {
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        OrganizationSection orgSection = new OrganizationSection(readList(dis, (MyListReader<Organization>) (list) -> {
+                        OrganizationSection orgSection = new OrganizationSection(readList(dis, (list) -> {
                             String homepage = dis.readUTF();
                             String url = dis.readUTF();
                             Organization organization = new Organization(homepage, url.equals("") ? null : url);
@@ -97,34 +97,12 @@ public class DataStreamSerializer implements SerializeStrategy {
                                 ));
                             });
                             list.add(organization);
-//                            orgSection.addOrganization(organization);
                         }));
                         resume.getSections().put(st, orgSection);
-//
-//                        OrganizationSection orgSection = new OrganizationSection();
-//                        read(dis, () -> {
-//                            String homepage = dis.readUTF();
-//                            String url = dis.readUTF();
-//                            Organization organization = new Organization(homepage, url.equals("") ? null : url);
-//                            read(dis, () -> {
-//                                LocalDate startDate = readDate(dis.readInt(), dis.readInt());
-//                                LocalDate endDate = readDate(dis.readInt(), dis.readInt());
-//                                String title = dis.readUTF();
-//                                String position = dis.readUTF();
-//                                position = (position.equals("") ? null : position);
-//                                organization.addPosition(new Organization.Position(
-//                                        startDate, endDate,
-//                                        title, position
-//                                ));
-//                            });
-//                            orgSection.addOrganization(organization);
-//
-//                        });
-//                        resume.getSections().put(st, orgSection);
-
                         break;
                 }
             });
+            //ниже две строки для проверки. к удалению.
             System.out.println(resume.getContacts().values());
             System.out.println(resume.getSections().values());
 
