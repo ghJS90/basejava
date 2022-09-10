@@ -4,7 +4,7 @@ public class TestDeadlock {
     public static final Object o1 = new Object();
     public static final Object o2 = new Object();
 
-    public static void testMethod(Object obj1, Object obj2){
+    public static void testMethod(Object obj1, Object obj2) {
         synchronized (obj1) {
             try {
                 Thread.sleep(50);
@@ -14,7 +14,8 @@ public class TestDeadlock {
             synchronized (obj2) {
                 System.out.println("Не увидим это сообщение");
             }
-        }    }
+        }
+    }
 
     public static void main(String[] a) {
 
@@ -25,3 +26,4 @@ public class TestDeadlock {
         t2.start();
     }
 }
+
