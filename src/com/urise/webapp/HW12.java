@@ -1,7 +1,6 @@
 package com.urise.webapp;
 
 import java.util.Arrays;
-import java.util.stream.IntStream;
 
 public class HW12 {
     public static void main(String[] args) {
@@ -11,6 +10,6 @@ public class HW12 {
 
     public static int minValue(int[] arr) {
         return Arrays.stream(arr).sorted().distinct().reduce(0,
-                (a, b) -> (a*10)+b);
+                (a, b) -> (a * 10) + b);
     }
 }
