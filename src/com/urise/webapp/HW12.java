@@ -10,9 +10,7 @@ public class HW12 {
     }
 
     public static int minValue(int[] arr) {
-        int[] resultArray = Arrays.stream(arr).sorted().distinct().toArray();
-        return IntStream.range(0, resultArray.length)
-                .map(i -> (int) (Math.pow(10, resultArray.length - 1 - i) * resultArray[i]))
-                .sum();
+        return Arrays.stream(arr).sorted().distinct().reduce(0,
+                (a, b) -> (a*10)+b);
     }
 }
