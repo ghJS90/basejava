@@ -7,8 +7,9 @@ import java.util.stream.Collectors;
 public class HW12 {
     public static void main(String[] args) {
         int[] array = new int[]{9, 1, 3, 5, 1, 3, 5};
-        List<Integer> integers = Arrays.asList(9, 1, 3, 5, 1, 3, 5, 2, 1);
         System.out.println(minValue(array));
+
+        List<Integer> integers = Arrays.asList(9, 1, 3, 2);
         System.out.println(oddOrEven(integers));
     }
 
@@ -18,14 +19,14 @@ public class HW12 {
     }
 
     public static List<Integer> oddOrEven(List<Integer> integers) {
-        int sum = integers.stream().mapToInt(x -> x).sum();
-        System.out.println(sum);
-        if (sum % 2 != 0) {
-            return integers.stream().filter(a -> a % 2 == 0).collect(Collectors.toList());
-        }
-        return integers.stream().filter(a -> a % 2 != 0).collect(Collectors.toList());
+        boolean isSumOdd = (integers.stream().mapToInt(Integer::intValue).sum()) % 2 != 0;
+
+        return integers.stream().
+                filter(a -> ((isSumOdd) && (a % 2 != 0)))
+                .collect(Collectors.toList());
     }
 }
+
 
 
 
