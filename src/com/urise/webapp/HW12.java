@@ -7,9 +7,9 @@ import java.util.stream.Collectors;
 public class HW12 {
     public static void main(String[] args) {
         int[] array = new int[]{9, 1, 3, 5, 1, 3, 5};
-//        System.out.println(minValue(array));
+        System.out.println(minValue(array));
 
-        List<Integer> integers = Arrays.asList(9, 1, 3, 2, 1);
+        List<Integer> integers = Arrays.asList(9, 1, 3, 2);
         System.out.println(oddOrEven(integers));
     }
 
@@ -26,13 +26,6 @@ public class HW12 {
                 .collect(Collectors.toList());
     }
 }
-
-
-
-
-
-
-
 
 
 

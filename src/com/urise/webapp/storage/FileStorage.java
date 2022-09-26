@@ -27,7 +27,7 @@ public class FileStorage extends AbstractStorage<File> {
     protected File[] doReadAll(){
         File[] files = directory.listFiles();
         if (files == null){
-            throw new StorageException("Directory error", null);
+            throw new StorageException("Directory error");
         }
         return files;
     }
