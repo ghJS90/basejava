@@ -1,14 +1,14 @@
 package com.urise.webapp;
 
 import com.urise.webapp.model.Resume;
-import com.urise.webapp.storage.ListStorage;
+import com.urise.webapp.storage.SqlStorage;
 import com.urise.webapp.storage.Storage;
 
 /**
  * Test for your com.urise.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    private final static Storage ARRAY_STORAGE = new ListStorage();
+    private final static Storage ARRAY_STORAGE = new SqlStorage("jdbc:postgresql://localhost:5432/postgres", "postgres", "postgres");
 
     public static void main(String[] args) {
         Resume r1 = new Resume("uuid1", "NAME_ONE");
@@ -25,10 +25,13 @@ public class MainTestArrayStorage {
 
         Resume r7 = new Resume("uuid3", "A");
         ARRAY_STORAGE.update(r7);
+
         printAll();
         ARRAY_STORAGE.delete(r1.getUuid());
+
         printAll();
         ARRAY_STORAGE.clear();
+
         printAll();
 
         System.out.println("Size: " + ARRAY_STORAGE.size());
