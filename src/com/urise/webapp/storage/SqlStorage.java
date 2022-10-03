@@ -29,7 +29,10 @@ public class SqlStorage implements Storage {
              PreparedStatement ps = conn.prepareStatement("UPDATE resume SET full_name = ? WHERE uuid = ?")) {
             ps.setString(1, r.getFullName());
             ps.setString(2, r.getUuid());
-            ps.executeUpdate();
+            int i = ps.executeUpdate();
+            if (i==0){
+                throw new NotExistStorageException("Резюме " + r.getUuid() + " отвутствует в базе данных.");
+            }
         } catch (SQLException e) {
             throw new StorageException(e);
         }
@@ -81,7 +84,7 @@ public class SqlStorage implements Storage {
              PreparedStatement ps = conn.prepareStatement("DELETE FROM resume WHERE uuid = ?")) {
             ps.execute();
         } catch (SQLException e) {
-            if (e.getSQLState().equals("22023")){
+            if (e.getSQLState().equals("22023")) {
                 throw new NotExistStorageException(uuid);
             }
             throw new StorageException(e);
