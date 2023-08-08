@@ -25,6 +25,18 @@ public class Resume implements Serializable, Comparable<Resume> {
     protected Map<SectionType, AbstractSection> sections = new EnumMap<>(SectionType.class);
     protected Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
+    public void setContacts(Map<ContactType, String> contacts) {
+        if(contacts != null) {
+            this.contacts = contacts;
+        }
+    }
+
+    public void setSections(Map<SectionType, AbstractSection> sections) {
+        if (sections != null){
+            this.sections = sections;
+        }
+    }
+
     public Resume() {
     }
 
