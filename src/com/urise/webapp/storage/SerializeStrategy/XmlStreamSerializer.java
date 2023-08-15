@@ -1,7 +1,6 @@
 package com.urise.webapp.storage.SerializeStrategy;
 
 import com.urise.webapp.model.*;
-import com.urise.webapp.model.section.*;
 import com.urise.webapp.util.XmlParser;
 
 import java.nio.charset.StandardCharsets;
@@ -13,7 +12,7 @@ public class XmlStreamSerializer implements SerializeStrategy {
     public XmlStreamSerializer() {
         xmlParser = new XmlParser(
                 Resume.class, Organization.class, Link.class, OrganizationSection.class,
-                StringSection.class, ListSection.class, Organization.Position.class);
+                TextSection.class, ListSection.class, Organization.Position.class);
     }
 
     @Override

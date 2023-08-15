@@ -1,6 +1,5 @@
-package com.urise.webapp.model.section;
+package com.urise.webapp.model;
 
-import com.urise.webapp.model.Link;
 import com.urise.webapp.util.LocalDateAdapter;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -21,8 +20,9 @@ import static com.urise.webapp.util.DateUtil.of;
 public class Organization implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    private Link homePage;
+    public static final Organization EMPTY = new Organization("", "", Position.EMPTY);
 
+    private Link homePage;
     private List<Position> positions = new ArrayList<>();
 
     public Organization() {
@@ -37,28 +37,12 @@ public class Organization implements Serializable {
         this.positions = positions;
     }
 
-    public Organization(String organizationName, String url) {
-        this.homePage = new Link(organizationName, url);
-    }
-
-    public void addPosition(Position pos) {
-        positions.add(pos);
-    }
-
     public Link getHomePage() {
         return homePage;
     }
 
     public List<Position> getPositions() {
         return positions;
-    }
-
-    @Override
-    public String toString() {
-        return "\nOrganization{\n" +
-                "\nhomePage:\n" + homePage +
-                "\n positions:\n" + positions +
-                '}';
     }
 
     @Override
@@ -75,12 +59,19 @@ public class Organization implements Serializable {
         return Objects.hash(homePage, positions);
     }
 
+    @Override
+    public String toString() {
+        return "Organization(" + homePage + "," + positions + ')';
+    }
+
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position implements Serializable {
+        public static final Position EMPTY = new Position();
+
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
-        private LocalDate dateFrom;
+        private LocalDate startDate;
         @XmlJavaTypeAdapter(LocalDateAdapter.class)
-        private LocalDate dateTo;
+        private LocalDate endDate;
         private String title;
         private String description;
 
@@ -91,18 +82,26 @@ public class Organization implements Serializable {
             this(of(startYear, startMonth), NOW, title, description);
         }
 
-        public Position(int startYear, Month startMonth, int endYear, Month endMonth, String title, String position) {
-            this(of(startYear, startMonth), of(endYear, endMonth), title, position);
+        public Position(int startYear, Month startMonth, int endYear, Month endMonth, String title, String description) {
+            this(of(startYear, startMonth), of(endYear, endMonth), title, description);
         }
 
-        public Position(LocalDate dateFrom, LocalDate dateTo, String title, String description) {
-            Objects.requireNonNull(dateFrom, "startDate must not be null");
-            Objects.requireNonNull(dateTo, "endDate must not be null");
-//            Objects.requireNonNull(title, "title must not be null");
-            this.dateFrom = dateFrom;
-            this.dateTo = dateTo;
+        public Position(LocalDate startDate, LocalDate endDate, String title, String description) {
+            Objects.requireNonNull(startDate, "startDate must not be null");
+            Objects.requireNonNull(endDate, "endDate must not be null");
+            Objects.requireNonNull(title, "title must not be null");
+            this.startDate = startDate;
+            this.endDate = endDate;
             this.title = title;
-            this.description = description;
+            this.description = description == null ? "" : description;
+        }
+
+        public LocalDate getStartDate() {
+            return startDate;
+        }
+
+        public LocalDate getEndDate() {
+            return endDate;
         }
 
         public String getTitle() {
@@ -113,38 +112,25 @@ public class Organization implements Serializable {
             return description;
         }
 
-        public LocalDate getDateFrom() {
-            return dateFrom;
-        }
-
-        public LocalDate getDateTo() {
-            return dateTo;
-        }
-
-        @Override
-        public String toString() {
-            return "\ndateFrom: " + dateFrom +
-                    "\ndateTo: " + (dateTo == null ? "Текущее время" : dateTo) +
-                    "\nДолжность: " + title +
-                    "\nОписание деятельности: " + description +
-                    "\n*\n";
-        }
-
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             Position position = (Position) o;
-            return Objects.equals(dateFrom, position.dateFrom) &&
-                    Objects.equals(dateTo, position.dateTo) &&
+            return Objects.equals(startDate, position.startDate) &&
+                    Objects.equals(endDate, position.endDate) &&
                     Objects.equals(title, position.title) &&
                     Objects.equals(description, position.description);
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(dateFrom, dateTo, title, description);
+            return Objects.hash(startDate, endDate, title, description);
+        }
+
+        @Override
+        public String toString() {
+            return "Position(" + startDate + ',' + endDate + ',' + title + ',' + description + ')';
         }
     }
 }
-

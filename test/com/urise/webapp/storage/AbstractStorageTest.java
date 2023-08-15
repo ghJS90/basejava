@@ -6,12 +6,15 @@ import com.urise.webapp.exception.NotExistStorageException;
 import com.urise.webapp.model.ContactType;
 import com.urise.webapp.model.Resume;
 import com.urise.webapp.model.SectionType;
-import com.urise.webapp.model.section.ListSection;
-import com.urise.webapp.model.section.StringSection;
+import com.urise.webapp.model.ListSection;
+import com.urise.webapp.model.Organization;
+import com.urise.webapp.model.OrganizationSection;
+import com.urise.webapp.model.TextSection;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,29 +41,29 @@ public abstract class AbstractStorageTest {
         R_3 = new Resume(UUID_3, "Name3");
         R_4 = new Resume(UUID_4, "Name4");
 
-        R_1.addContact(ContactType.EMAIL, "mail1@ya.ru");
-        R_1.addContact(ContactType.PHONE, "11111");
-        R_1.addSection(SectionType.OBJECTIVE, new StringSection("Objective1"));
-        R_1.addSection(SectionType.PERSONAL, new StringSection("Personal data"));
-        R_1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achivment11", "Achivment12", "Achivment13"));
-        R_1.addSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "JavaScript"));
-//        R_1.addSection(SectionType.EXPERIENCE,
-//                new OrganizationSection(
-//                        new Organization("Organization11", "http://Organization11.ru",
-//                                new Organization.Position(2005, Month.JANUARY, "position1", "content1"),
-//                                new Organization.Position(2001, Month.MARCH, 2005, Month.JANUARY, "position2", "content2"))));
-//        R_1.addSection(SectionType.EDUCATION,
-//                new OrganizationSection(
-//                        new Organization("Institute", null,
-//                                new Organization.Position(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
-//                                new Organization.Position(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT facultet")),
-//                        new Organization("Organization12", "http://Organization12.ru")));
-        R_2.addContact(ContactType.SKYPE, "skype2");
-        R_2.addContact(ContactType.PHONE, "22222");
-//        R_1.addSection(SectionType.EXPERIENCE,
-//                new OrganizationSection(
-//                        new Organization("Organization2", "http://Organization2.ru",
-//                                new Organization.Position(2015, Month.JANUARY, "position1", "content1"))));
+        R_1.setContact(ContactType.EMAIL, "mail1@ya.ru");
+        R_1.setContact(ContactType.PHONE, "11111");
+        R_1.setSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
+        R_1.setSection(SectionType.PERSONAL, new TextSection("Personal data"));
+        R_1.setSection(SectionType.ACHIEVEMENT, new ListSection("Achivment11", "Achivment12", "Achivment13"));
+        R_1.setSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "JavaScript"));
+        R_1.setSection(SectionType.EXPERIENCE,
+                new OrganizationSection(
+                        new Organization("Organization11", "http://Organization11.ru",
+                                new Organization.Position(2005, Month.JANUARY, "position1", "content1"),
+                                new Organization.Position(2001, Month.MARCH, 2005, Month.JANUARY, "position2", "content2"))));
+        R_1.setSection(SectionType.EDUCATION,
+                new OrganizationSection(
+                        new Organization("Institute", null,
+                                new Organization.Position(1996, Month.JANUARY, 2000, Month.DECEMBER, "aspirant", null),
+                                new Organization.Position(2001, Month.MARCH, 2005, Month.JANUARY, "student", "IT facultet")),
+                        new Organization("Organization12", "http://Organization12.ru")));
+        R_2.setContact(ContactType.SKYPE, "skype2");
+        R_2.setContact(ContactType.PHONE, "22222");
+        R_1.setSection(SectionType.EXPERIENCE,
+                new OrganizationSection(
+                        new Organization("Organization2", "http://Organization2.ru",
+                                new Organization.Position(2015, Month.JANUARY, "position1", "content1"))));
 //        System.out.println();
     }
 

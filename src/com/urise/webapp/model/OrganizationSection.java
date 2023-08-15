@@ -1,4 +1,4 @@
-package com.urise.webapp.model.section;
+package com.urise.webapp.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-public class OrganizationSection extends AbstractSection implements Serializable {
+public class OrganizationSection extends Section implements Serializable {
     private  static final long serialVersionUID = 1L;
 
     private List<Organization> organizations = new ArrayList<>();
